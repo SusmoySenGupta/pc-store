@@ -16,15 +16,13 @@ class CreateCategorySubCategoryTable extends Migration
         Schema::create('category_sub_category', function (Blueprint $table)
         {
             $table->id();
-
             $table->foreignId('category_id')
                 ->constrained()
                 ->cascadeOnDelete();
-
             $table->foreignId('sub_category_id')
                 ->constrained()
                 ->cascadeOnDelete();
-                
+            $table->unique(['category_id', 'sub_category_id']);
             $table->timestamps();
         });
     }

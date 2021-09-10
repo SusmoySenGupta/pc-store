@@ -25,6 +25,7 @@ class CreateComponentProductTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->unique(['component_id', 'product_id']);
             $table->timestamps();
         });
     }

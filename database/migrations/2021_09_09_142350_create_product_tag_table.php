@@ -24,7 +24,8 @@ class CreateProductTagTable extends Migration
             $table->foreignId('tag_id')
                 ->constrained()
                 ->cascadeOnDelete();
-                
+            
+            $table->unique(['product_id', 'tag_id']);
             $table->timestamps();
         });
     }

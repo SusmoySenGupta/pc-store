@@ -24,7 +24,8 @@ class CreateCartProductTable extends Migration
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete();
-                
+            
+            $table->unique(['cart_id', 'product_id']);
             $table->integer('quantity');
             $table->timestamps();
         });

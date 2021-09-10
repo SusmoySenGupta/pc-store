@@ -26,7 +26,8 @@ class CreateOrderDetailsTable extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
-                
+            
+            $table->unique(['order_id', 'product_id']);
             $table->unsignedSmallInteger('quantity');
             $table->decimal('price', 10, 2);
             $table->timestamps();

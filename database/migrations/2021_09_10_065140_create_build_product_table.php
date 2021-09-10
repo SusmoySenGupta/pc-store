@@ -25,6 +25,7 @@ class CreateBuildProductTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->unique(['build_id', 'product_id']);
             $table->timestamps();
         });
     }
