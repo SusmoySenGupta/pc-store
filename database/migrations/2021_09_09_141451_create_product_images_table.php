@@ -20,7 +20,8 @@ class CreateProductImagesTable extends Migration
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete();
-
+                
+            $table->unsignedSmallInteger('sequence')->default(0);
             $table->string('image', 500);
             $table->text('description')->nullable();
             $table->timestamps();

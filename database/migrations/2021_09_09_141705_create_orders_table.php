@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_amount', 11, 2);
             $table->string('billing_address');
             $table->string('shipping_address');
-            $table->boolean('is_delivered')->default(0);
+            $table->boolean('is_delivered')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

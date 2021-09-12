@@ -18,16 +18,14 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
 
             $table->foreignId('order_id')
-                ->nullable()
                 ->constrained()
-                ->nullOnDelete();
+                ->cascadeOnDelete();
 
             $table->foreignId('product_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
             
-            $table->unique(['order_id', 'product_id']);
             $table->unsignedSmallInteger('quantity');
             $table->decimal('price', 10, 2);
             $table->timestamps();

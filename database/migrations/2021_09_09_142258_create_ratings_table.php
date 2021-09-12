@@ -27,7 +27,6 @@ class CreateRatingsTable extends Migration
             ->constrained()
             ->nullOnDelete();
             
-            $table->unique(['product_id', 'customer_id']);
             $table->integer('value');
             $table->timestamps();
             $table->softDeletes();

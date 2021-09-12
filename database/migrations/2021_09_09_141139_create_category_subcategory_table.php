@@ -15,14 +15,17 @@ class CreateCategorySubCategoryTable extends Migration
     {
         Schema::create('category_sub_category', function (Blueprint $table)
         {
-            $table->id();
-            $table->foreignId('category_id')
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->foreignId('sub_category_id')
-                ->constrained()
-                ->cascadeOnDelete();
+            $table->unsignedMediumInteger('category_id');
+            $table->unsignedMediumInteger('sub_category_id');
             $table->unique(['category_id', 'sub_category_id']);
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
+            $table->foreign('sub_category_id')
+                ->references('id')
+                ->on('sub_categories')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +37,6 @@ class CreateCategorySubCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_subcategory');
+        Schema::dropIfExists('category_sub_category');
     }
 }

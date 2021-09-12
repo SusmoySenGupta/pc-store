@@ -15,7 +15,7 @@ class CreateComponentsTable extends Migration
     {
         Schema::create('components', function (Blueprint $table)
         {
-            $table->id();
+            $table->increments('id');
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
 
@@ -28,7 +28,7 @@ class CreateComponentsTable extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
-                
+
             $table->timestamps();
             $table->softDeletes();
         });

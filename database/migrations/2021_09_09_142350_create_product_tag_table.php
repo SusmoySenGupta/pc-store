@@ -15,8 +15,6 @@ class CreateProductTagTable extends Migration
     {
         Schema::create('product_tag', function (Blueprint $table)
         {
-            $table->id();
-
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete();

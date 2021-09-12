@@ -15,17 +15,14 @@ class CreateComponentProductTable extends Migration
     {
         Schema::create('component_product', function (Blueprint $table)
         {
-            $table->id();
-            
-            $table->foreignId('component_id')
-                ->constrained()
-                ->cascadeOnDelete();
-
+            $table->unsignedInteger('component_id');
             $table->foreignId('product_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->unique(['component_id', 'product_id']);
+            $table->primary(['component_id', 'product_id']);
+
+            $table->foreign('component_id')->references('id')->on('components')->onDelete('cascade');
             $table->timestamps();
         });
     }

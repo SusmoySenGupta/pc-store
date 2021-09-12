@@ -15,8 +15,6 @@ class CreateBuildProductTable extends Migration
     {
         Schema::create('build_product', function (Blueprint $table)
         {
-            $table->id();
-
             $table->foreignId('build_id')
                 ->constrained()
                 ->cascadeOnDelete();
@@ -25,7 +23,9 @@ class CreateBuildProductTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->unique(['build_id', 'product_id']);
+            $table->integer('sequence')->default(0);
+
+            $table->primary(['build_id', 'product_id']);
             $table->timestamps();
         });
     }
