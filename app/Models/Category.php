@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kalnoy\Nestedset\NodeTrait;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, NodeTrait;
 
-    protected $guarded = [];
+    /**
+     * @var array
+     */
+    protected $guarded = ['id', 'created_by', 'updated_by' 'created_at', 'updated_at'];
 
-    public function subCategories()
-    {
-        return $this->belongsToMany(SubCategory::class);
-    }
 }
