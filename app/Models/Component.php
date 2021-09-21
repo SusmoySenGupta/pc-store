@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Component extends Model
 {
     use HasFactory;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['name', 'slug'];
 }
