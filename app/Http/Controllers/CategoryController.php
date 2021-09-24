@@ -114,6 +114,21 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+
+            Alert::toast("Category '{$category->name}' has been deleted", 'error')
+                ->padding('0.3rem')
+                ->width('20rem')
+                ->position('bottom-left')
+                ->background('#F9FAFB')
+                ->timerProgressBar();
+
+            return redirect()->route('admin.categories.index');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->with('error', $e->getMessage());
+        };
     }
 }
