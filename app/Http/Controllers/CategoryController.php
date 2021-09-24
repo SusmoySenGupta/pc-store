@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -35,9 +37,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        try {
+            $category_name = Category::create($request->validated())->name;
+
+            Alert::toast("A new category '${category_name}' has been created", 'success')
+                ->padding('0.3rem')
+                ->width('20rem')
+                ->position('bottom-left')
+                ->background('#F9FAFB')
+                ->timerProgressBar();
+
+            return redirect()->route('admin.categories.index');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->with('error', $e->getMessage());
+        };
     }
 
     /**

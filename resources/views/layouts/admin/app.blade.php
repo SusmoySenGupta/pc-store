@@ -34,6 +34,7 @@
                         @yield('heading')
                     </h2>
                     @yield('content')
+                    @include('sweetalert::alert')
                 </div>
             </main>
         </div>
