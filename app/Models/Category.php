@@ -14,6 +14,6 @@ class Category extends Model
     /**
      * @var array
      */
-    protected $guarded = ['id', 'created_by', 'updated_by' 'created_at', 'updated_at'];
+    protected $guarded = ['id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 }
