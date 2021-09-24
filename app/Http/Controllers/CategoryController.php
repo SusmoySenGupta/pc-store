@@ -76,7 +76,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.category.edit');
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -86,9 +86,24 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        try {
+            $category->update($request->validated());
+
+            Alert::toast("Category '{$category->name}' has been updated", 'success')
+                ->padding('0.3rem')
+                ->width('20rem')
+                ->position('bottom-left')
+                ->background('#F9FAFB')
+                ->timerProgressBar();
+
+            return redirect()->route('admin.categories.index');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->with('error', $e->getMessage());
+        };
     }
 
     /**

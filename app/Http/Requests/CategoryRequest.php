@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Validation\Rule;
 
 class CategoryRequest extends Request
 {
@@ -14,7 +15,12 @@ class CategoryRequest extends Request
     public function rules()
     {
         return [
-            'name' => ['required', 'regex:/^[a-zA-Z0-9\s]+$/',  'min:4', 'max:50', 'unique:categories,name']
+            'name' => [
+                'required',
+                'regex:/^[a-zA-Z0-9\s]+$/',
+                'min:4', 'max:50',
+                Rule::unique('categories')->ignore($this->category),
+            ],
         ];
     }
 }
