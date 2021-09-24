@@ -74,7 +74,7 @@
 
                             </td>
                             <td class="px-4 py-3 text-xs flex items-center gap-4">
-                                <a href="{{ route('admin.categories.edit', $category->id) }}">
+                                <a href="{{ route('admin.categories.edit', $category->slug) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-5 w-5 text-purple-500 dark:text-gray-400 transition duration-500 ease-in-out dark:hover:text-purple-600 transform hover:-translate-y-1 hover:scale-110"
                                         viewBox="0 0 20 20" fill="currentColor">
@@ -82,7 +82,7 @@
                                             d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                     </svg>
                                 </a>
-                                <a href="{{ route('admin.categories.show', $category->id) }}">
+                                <a href="{{ route('admin.categories.show', $category->slug) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-6 w-6 text-pink-500 dark:text-gray-400 transition duration-500 ease-in-out dark:hover:text-pink-600 transform hover:-translate-y-1 hover:scale-110"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,7 +92,7 @@
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </a>
-                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
+                                <form action="{{ route('admin.categories.destroy', $category->slug) }}" method="POST"
                                     onsubmit="return confirm('Are you sure you want to delete {{ $category->name }}')">
                                     @csrf
                                     @method('DELETE')
