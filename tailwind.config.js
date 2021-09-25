@@ -1,14 +1,15 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require('tailwindcss/plugin')
 const Color = require('color')
+
 module.exports = {
     mode: 'jit',
     purge: [
-        './resources/**/*.blade.php',
-        './resources/**/*.js',
-        './resources/**/*.vue',
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
     ],
-    darkMode: 'class', // or 'media' or 'class'
+    darkMode: 'class',
     theme: {
         customForms: (theme) => ({
             default: {
@@ -162,10 +163,11 @@ module.exports = {
                 xl: '36rem',
             },
             fontFamily: {
-                sans: ['Inter'],
+                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
         },
     },
+
     variants: {
         backgroundColor: [
             'hover',
@@ -192,7 +194,11 @@ module.exports = {
         borderColor: ['focus', 'hover', 'dark', 'dark:focus', 'dark:hover'],
         divideColor: ['dark'],
         boxShadow: ['focus', 'dark:focus'],
+        extend: {
+            opacity: ['disabled'],
+        },
     },
+
     plugins: [
         require("@tailwindcss/forms")({
             strategy: 'class',
@@ -212,4 +218,4 @@ module.exports = {
             addUtilities(newUtilities, variants('boxShadow'))
         }),
     ],
-}
+};
