@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('slug', 255)->index();
             $table->string('sku', 255)->unique();
 
-            $table->unsignedMediumInteger('sub_category_id');
+            $table->unsignedMediumInteger('category_id');
 
             $table->foreignId('brand_id')
                 ->constrained()
@@ -31,9 +31,9 @@ class CreateProductsTable extends Migration
             $table->integer('stock')->default(0);
             $table->decimal('discount_percentage', 11, 2)->nullable();
 
-            $table->foreign('sub_category_id')
+            $table->foreign('category_id')
                 ->references('id')
-                ->on('sub_categories')
+                ->on('categories')
                 ->onDelete('cascade');
 
             $table->foreignId('created_by')
