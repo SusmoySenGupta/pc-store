@@ -55,7 +55,7 @@
                 </svg>
                 <!-- Notification badge -->
                 <span aria-hidden="true"
-                    class="animate-pulse absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>
+                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full animate-pulse dark:border-gray-800"></span>
             </button>
             <template x-if="isNotificationsMenuOpen">
                 <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
@@ -142,7 +142,6 @@
                                 <span>Log out</span>
                             </button>
                         </form>
-
                     </li>
                 </ul>
             </template>
