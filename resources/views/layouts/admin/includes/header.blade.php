@@ -55,7 +55,7 @@
                 </svg>
                 <!-- Notification badge -->
                 <span aria-hidden="true"
-                    class="animate-pulse absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>
+                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full animate-pulse dark:border-gray-800"></span>
             </button>
             <template x-if="isNotificationsMenuOpen">
                 <ul x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
@@ -129,9 +129,9 @@
                         </a>
                     </li>
                     <li class="flex">
-                        <form method="POST" action="{{ route('logout') }}" class="w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                        <form method="POST" action="{{ route('logout') }}" class="w-full px-2 py-1 text-sm transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200">
                             @csrf
-                            <button type="submit" class="inline-flex items-center w-full"
+                            <button type="submit" class="inline-flex items-center w-full font-semibold"
                                 href="#">
                                 <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round"
                                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -142,7 +142,6 @@
                                 <span>Log out</span>
                             </button>
                         </form>
-
                     </li>
                 </ul>
             </template>
