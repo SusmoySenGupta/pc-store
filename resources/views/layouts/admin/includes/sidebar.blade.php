@@ -17,7 +17,7 @@ $side_navs = [
 @endphp
 
 <div class="py-4 text-gray-500 dark:text-gray-400">
-    <a class="ml-6 text-xl text-gray-500 dark:text-gray-200 flex items-center gap-2" href="#">
+    <a class="ml-6 text-xl text-gray-500 dark:text-gray-200 flex items-center gap-2" href="{{ route('admin.dashboard') }}">
         <x-application-logo class="w-8 h-8 fill-current text-gray-500 dark:text-gray-200" />
         <span class="tracking-tighter"><span class="font-semibold">P</span>c store</span>
     </a>
