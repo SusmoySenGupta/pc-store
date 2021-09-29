@@ -29,7 +29,9 @@ class CategoryController extends Controller
      */
     public function create(): View
     {
-        return view('admin.category.create');
+        $parent_categories = Category::parents()->get();
+
+        return view('admin.category.create', compact('parent_categories'));
     }
 
     /**
@@ -52,7 +54,7 @@ class CategoryController extends Controller
 
             return redirect()->route('admin.categories.index');
         }
-        catch (\Exception$e)
+        catch (\Exception $e)
         {
             return redirect()->back()->with('error', $e->getMessage());
         };
@@ -77,7 +79,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
-        return view('admin.category.edit', compact('category'));
+        $parent_categories = Category::parents()->get();
+
+        return view('admin.category.edit', compact('category', 'parent_categories'));
     }
 
     /**

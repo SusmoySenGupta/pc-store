@@ -27,6 +27,14 @@
         <div class="flex flex-col justify-start gap-4 px-3 mt-2 mb-3">
             <div class="flex items-center gap-2">
                 <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    Parent
+                </span>
+                <span class="text-sm text-gray-700 dark:text-gray-200">
+                    {{ $category->parent->name ?? '---' }}
+                </span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">
                     Created at:
                 </span>
                 <span class="text-sm text-gray-700 dark:text-gray-200">
