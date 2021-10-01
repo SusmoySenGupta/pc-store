@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComponentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resources([
         'categories' => CategoryController::class
     ]);
+
+    Route::resource('components', ComponentController::class)->except('show');
 });
