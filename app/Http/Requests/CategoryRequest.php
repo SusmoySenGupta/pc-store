@@ -21,6 +21,13 @@ class CategoryRequest extends Request
                 'min:4', 'max:50',
                 Rule::unique('categories')->ignore($this->category),
             ],
+
+            'parent_id' => [
+                'present',
+                'nullable',
+                'integer',
+                'exists:categories,id',
+            ]
         ];
     }
 }
