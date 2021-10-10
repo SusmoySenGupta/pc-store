@@ -12,6 +12,7 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "phpcollective/tracker": "dev-master",
         "realrashid/sweet-alert": "^4.0"
     },
     "require-dev": {

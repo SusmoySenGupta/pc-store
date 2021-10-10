@@ -4,26 +4,57 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
+use PhpCollective\Tracker\Trackable;
 
 class Brand extends Model
 {
-    use HasFactory;
+    use HasFactory, Trackable;
 
     /**
      * @var array
      */
     protected $fillable = ['name', 'slug', 'logo', 'description'];
 
-    /**
-     * @return mixed
-     */
-    public function products()
+    public function getRouteKeyName()
     {
-        return $this->hasMany(Product::class);
+        return 'slug';
     }
 
-    public function productImages()
+    /**
+     * @param $value
+     */
+    public function setNameAttribute($value)
     {
-        return $this->hasMany(ProductImage::class);
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::slug($value, '-');
+    }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id')
+            ->withDefault();
     }
 }

@@ -18,21 +18,9 @@ class CreateBrandsTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
-            $table->string('logo', 255)->nullable();
-            $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->foreignId('created_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
-            $table->foreignId('updated_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-                
             $table->softDeletes();
+            $table->track(true);
         });
     }
 
@@ -44,5 +32,9 @@ class CreateBrandsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('brands');
+
+        Schema::table('table', function (Blueprint $table) {
+            $table->dropTrack();
+        });
     }
 }
