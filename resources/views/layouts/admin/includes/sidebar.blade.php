@@ -10,7 +10,8 @@ $side_navs = [
         'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>',
     ],
     'Brands' => [
-        'route' => '',
+        'all-route' => 'admin.brands.*',
+        'route' => 'admin.brands.index',
         'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>'
     ],
     'Components' => [
@@ -22,8 +23,9 @@ $side_navs = [
 @endphp
 
 <div class="py-4 text-gray-500 dark:text-gray-400">
-    <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-        Pc Store
+    <a class="ml-6 text-xl text-gray-500 dark:text-gray-200 flex items-center gap-2" href="{{ route('admin.dashboard') }}">
+        <x-application-logo class="w-8 h-8 fill-current text-gray-500 dark:text-gray-200" />
+        <span class="tracking-tighter"><span class="font-semibold">P</span>c store</span>
     </a>
     <ul class="mt-6">
         @forelse ($side_navs as $key => $value)

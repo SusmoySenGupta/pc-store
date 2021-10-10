@@ -110,7 +110,7 @@
                             </tr>
                         @empty
                             <tr class="text-center text-gray-700 dark:text-gray-400">
-                                <td colspan="4" class="px-4 py-3 text-sm">
+                                <td colspan="5" class="px-4 py-3 text-sm">
                                     No categories found
                                 </td>
                             </tr>
