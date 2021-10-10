@@ -46,7 +46,7 @@ class Brand extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id')
-            ->withDefault(fn() => (new User())->setAttribute('name', 'Created by system'));
+            ->withDefault();
     }
 
     /**
@@ -55,6 +55,6 @@ class Brand extends Model
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by', 'id')
-            ->withDefault(fn() => (new User())->setAttribute('name', 'Updated by system'));
+            ->withDefault();
     }
 }

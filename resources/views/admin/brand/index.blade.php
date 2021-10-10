@@ -36,7 +36,7 @@
                                     @include('components.forms.profile-with-time', ['model' => $brand, 'type' => 'updatedBy'])
                                 </td>
                                 <td class="flex items-center gap-4 px-4 py-3 text-xs">
-                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'show', 'delete'], 'route' => 'admin.brands', 'route_key' => $brand->slug])
+                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'delete'], 'route' => 'admin.brands', 'route_key' => $brand->slug])
                                 </td>
                             </tr>
                         @empty
