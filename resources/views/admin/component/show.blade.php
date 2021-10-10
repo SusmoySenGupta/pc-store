@@ -1,17 +1,17 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Category Details')
-@section('heading', 'Category Details')
+@section('title', 'Component Details')
+@section('heading', 'Component Details')
 
 @section('content')
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div class="grid items-center justify-center grid-cols-1 gap-2 mb-2 sm:grid-cols-3">
             <span></span>
             <p class="font-bold leading-tight text-center text-gray-700 dark:text-gray-200">
-                Category - {{ $category->name }}
+                Component - {{ $component->name }}
             </p>
             <div class="justify-end hidden sm:flex">
-                <a href="{{ url()->previous() == url()->current() ? route('admin.categories.index') : url()->previous() }}"
+                <a href="{{ url()->previous() == url()->current() ? route('admin.components.index') : url()->previous() }}"
                     class="inline-flex items-center justify-center flex-none w-full gap-2 px-4 py-2 text-sm font-medium leading-6 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
@@ -27,10 +27,10 @@
         <div class="flex flex-col justify-start gap-4 px-3 mt-2 mb-3">
             <div class="flex items-center gap-2">
                 <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                    Parent
+                    Parent:
                 </span>
                 <span class="text-sm text-gray-700 dark:text-gray-200">
-                    {{ $category->parent->name ?? '---' }}
+                    {{ $component->parent->name ?? '---' }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
@@ -38,7 +38,7 @@
                     Created at:
                 </span>
                 <span class="text-sm text-gray-700 dark:text-gray-200">
-                    {{ $category->created_at->format('d-M-Y h:m:s') }}
+                    {{ $component->created_at->format('d-M-Y h:m:s') }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <a href="#" class="text-sm font-semibold text-gray-600 underline dark:text-gray-400">
-                            {{ $category->created_by ?? 'Jolina Angelie' }}
+                            {{ $component->created_by ?? 'Jolina Angelie' }}
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     Updated at:
                 </span>
                 <span class="text-sm text-gray-700 dark:text-gray-200">
-                    {{ $category->updated_at->format('d-M-Y h:m:s') }}
+                    {{ $component->updated_at->format('d-M-Y h:m:s') }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
@@ -88,7 +88,7 @@
                     </div>
                     <div>
                         <a href="#" class="text-sm font-semibold text-gray-600 underline dark:text-gray-400">
-                            {{ $category->updated_by ?? 'Sarah Curry' }}
+                            {{ $component->updated_by ?? 'Sarah Curry' }}
                         </a>
                     </div>
                 </div>

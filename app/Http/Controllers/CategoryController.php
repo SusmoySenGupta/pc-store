@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
@@ -13,7 +15,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $categories = Category::latest()->paginate(10);
 
@@ -25,9 +27,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        return view('admin.category.create');
+        $parent_categories = Category::parents()->get();
+
+        return view('admin.category.create', compact('parent_categories'));
     }
 
     /**
@@ -36,7 +40,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Requests\CategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): RedirectResponse
     {
         try {
             $category_name = Category::create($request->validated())->name;
@@ -50,7 +54,7 @@ class CategoryController extends Controller
 
             return redirect()->route('admin.categories.index');
         }
-        catch (\Exception$e)
+        catch (\Exception $e)
         {
             return redirect()->back()->with('error', $e->getMessage());
         };
@@ -62,7 +66,7 @@ class CategoryController extends Controller
      * @param  App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Category $category): View
     {
         return view('admin.category.show', compact('category'));
     }
@@ -73,9 +77,11 @@ class CategoryController extends Controller
      * @param  App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $category): View
     {
-        return view('admin.category.edit', compact('category'));
+        $parent_categories = Category::parents()->get();
+
+        return view('admin.category.edit', compact('category', 'parent_categories'));
     }
 
     /**
@@ -85,7 +91,7 @@ class CategoryController extends Controller
      * @param  App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
         try {
             $category->update($request->validated());
@@ -111,7 +117,7 @@ class CategoryController extends Controller
      * @param  App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         try {
             $category->delete();

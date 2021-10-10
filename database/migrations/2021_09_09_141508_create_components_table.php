@@ -19,6 +19,12 @@ class CreateComponentsTable extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
 
+            $table->integer('parent_id')->nullable();
+            // $table->foreign('parent_id')
+            //     ->references('id')
+            //     ->on('components')
+            //     ->onDelete('cascade');
+
             $table->foreignId('created_by')
                 ->nullable()
                 ->constrained('users')
