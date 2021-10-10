@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComponentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
         'categories' => CategoryController::class,
         'brands'     => BrandController::class,
     ]);
+  
+    Route::resource('components', ComponentController::class)->except('show');
 });
