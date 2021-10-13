@@ -1,5 +1,5 @@
 <div class="flex items-center">
-    @if ($model[$type]->id != null)
+    @if ($model[$type]?->id != null)
         <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
             @if ($model[$type]?->profile_photo)
                 <img class="object-cover w-8 h-8 rounded-full" src="{{ asset('img/profile/' . $model[$type]->profile_photo) }}" alt="" aria-hidden="true" />

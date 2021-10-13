@@ -34,6 +34,21 @@
                                 <td class="px-4 py-3 text-sm">
                                     <p class="font-semibold">{{ $product->name }}</p>
                                 </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">{{ $product->sku }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">{{ $product->brand->name ?? '---' }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">{{ $product->price }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">{{ $product->stock }}</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">{{ $product->discount_percentage }}</p>
+                                </td>
                                 <td class="px-4 py-3 text-xs">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'createdBy'])
                                 </td>
@@ -41,7 +56,7 @@
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'updatedBy'])
                                 </td>
                                 <td class="flex items-center gap-4 px-4 py-3 text-xs">
-                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'delete'], 'route' => 'admin.brands', 'route_key' => $brand->slug])
+                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'delete'], 'route' => 'admin.products', 'route_key' => $product->slug])
                                 </td>
                             </tr>
                         @empty

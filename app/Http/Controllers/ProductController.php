@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\ProductRequest as Request;
 
 class ProductController extends Controller
 {
@@ -27,18 +31,36 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('admin.product.index');
+        $brands     = Brand::all();
+        $categories = Category::all();
+
+        return view('admin.product.create', compact('brands', 'categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\ProductRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        try {
+            $product = Product::create($request->all());
+
+            Alert::toast("A new product '{$product->name}' has been created", 'success')
+                ->padding('0.3rem')
+                ->width('20rem')
+                ->position('bottom-right')
+                ->background('#F9FAFB')
+                ->timerProgressBar();
+
+            return redirect()->route('admin.products.index');
+        }
+        catch (\Exception $e)
+        {
+            return redirect()->back()->with('error', $e->getMessage());
+        };
     }
 
     /**
