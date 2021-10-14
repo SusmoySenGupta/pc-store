@@ -6,7 +6,7 @@
 @section('content')
     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         @if (session()->has('error'))
-            <div class="bg-red-500 border">
+            <div class="p-2 bg-red-100 rounded dark:bg-red-300 dark:text-gray-700">
                 {{ session('error') }}
             </div>
         @endif
