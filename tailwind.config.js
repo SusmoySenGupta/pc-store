@@ -1,6 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
-const plugin = require('tailwindcss/plugin')
-const Color = require('color')
+const plugin = require('tailwindcss/plugin');
+const Color = require('color');
 
 module.exports = {
     mode: 'jit',
@@ -200,9 +200,7 @@ module.exports = {
     },
 
     plugins: [
-        require("@tailwindcss/forms")({
-            strategy: 'class',
-        }),
+        require("@tailwindcss/forms"),
         plugin(({ addUtilities, e, theme, variants }) => {
             const newUtilities = {}
             Object.entries(theme('colors')).map(([name, value]) => {
