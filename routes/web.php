@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComponentController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TagController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,5 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
 
     Route::resource('components', ComponentController::class)->except('show');
     Route::resource('tags', TagController::class)->except('show');
+    Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
 });
