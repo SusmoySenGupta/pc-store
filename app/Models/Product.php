@@ -35,6 +35,14 @@ class Product extends Model
         return $this->belongsTo(Brand::class)->withDefault();
     }
 
+     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class)->withDefault();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
