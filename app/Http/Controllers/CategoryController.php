@@ -13,7 +13,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index(): View
     {
@@ -25,7 +25,7 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -38,7 +38,7 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Requests\CategoryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CategoryRequest $request): RedirectResponse
     {
@@ -48,7 +48,7 @@ class CategoryController extends Controller
             Alert::toast("A new category '${category_name}' has been created", 'success')
                 ->padding('0.3rem')
                 ->width('20rem')
-                ->position('bottom-left')
+                ->position('bottom-right')
                 ->background('#F9FAFB')
                 ->timerProgressBar();
 
@@ -56,15 +56,15 @@ class CategoryController extends Controller
         }
         catch (\Exception $e)
         {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\View\View
      */
     public function show(Category $category): View
     {
@@ -74,12 +74,12 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\View\View
      */
     public function edit(Category $category): View
     {
-        $parent_categories = Category::parents()->get();
+        $parent_categories = Category::parents()->get()->except($category->id);
 
         return view('admin.category.edit', compact('category', 'parent_categories'));
     }
@@ -88,8 +88,8 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Requests\CategoryRequest  $request
-     * @param  App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
@@ -99,7 +99,7 @@ class CategoryController extends Controller
             Alert::toast("Category '{$category->name}' has been updated", 'success')
                 ->padding('0.3rem')
                 ->width('20rem')
-                ->position('bottom-left')
+                ->position('bottom-right')
                 ->background('#F9FAFB')
                 ->timerProgressBar();
 
@@ -107,15 +107,15 @@ class CategoryController extends Controller
         }
         catch (\Exception$e)
         {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category): RedirectResponse
     {
