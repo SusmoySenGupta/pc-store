@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\ProductRequest as Request;
@@ -31,10 +33,11 @@ class ProductController extends Controller
      */
     public function create(): View
     {
+        $tags       = Tag::all();
         $brands     = Brand::all();
         $categories = Category::all();
 
-        return view('admin.product.create', compact('brands', 'categories'));
+        return view('admin.product.create', compact('tags', 'brands', 'categories'));
     }
 
     /**
@@ -46,18 +49,22 @@ class ProductController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $product = Product::create($request->all());
+            DB::transaction(function () use ($request) {
+                $product = Product::create($request->all());
 
-            Alert::toast("A new product '{$product->name}' has been created", 'success')
+                $product->tags()->attach($request->tags);
+
+                Alert::toast("A new product '{$product->name}' has been created", 'success')
                 ->padding('0.3rem')
                 ->width('20rem')
                 ->position('bottom-right')
                 ->background('#F9FAFB')
                 ->timerProgressBar();
+            });
 
             return redirect()->route('admin.products.index');
         }
-        catch (\Exception $e)
+        catch (\Exception$e)
         {
             return redirect()->back()->with('error', $e->getMessage());
         };
