@@ -31,7 +31,7 @@
                                 <td class="px-4 py-3 text-sm">
                                     {{ $loop->index + $products->firstItem() }}
                                 </td>
-                                <td class="px-4 py-3 text-sm">
+                                <td class="px-4 py-3 text-xs">
                                     <p class="font-semibold">{{ $product->name }}</p>
                                 </td>
                                 <td class="px-4 py-3 text-xs">

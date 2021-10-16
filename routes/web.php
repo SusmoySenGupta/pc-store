@@ -39,7 +39,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
         'products'   => ProductController::class,
     ]);
 
-    Route::resource('components', ComponentController::class)->except('show');
+    // Route::resource('components', ComponentController::class)->except('show');
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
 });
