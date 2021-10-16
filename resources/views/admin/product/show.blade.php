@@ -111,7 +111,7 @@
                         </div>
                         <div>
                             <p class="text-xs font-semibold text-gray-600 dark:text-gray-200">{{ $product->updatedBy->name }}</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ $product->updated_at > format('M d, Y') }}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ $product->updated_at->format('M d, Y') }}</p>
                             <p class="text-xs text-gray-600 dark:text-gray-400">{{ $product->updated_at->format('H:i A') }}</p>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
             </div>
             <div class="flex flex-col items-start justify-center gap-2 sm:flex-row sm:items-center sm:justify-start">
                 @forelse ($product->images as $image)
-                    <img src="{{ Storage::url($image->path) }}" alt="Product Image" class="w-20 h-20 img-responsive">
+                    <img src="{{ Storage::url($image->path) }}" alt="Product Image" class="w-28 img-responsive">
                 @empty
                 <p class="text-xs text-gray-800 dark:text-gray-400">No image available</p>
                 @endforelse
