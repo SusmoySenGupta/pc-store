@@ -18,7 +18,7 @@
                             <th class="px-4 py-3">SKU</th>
                             <th class="px-4 py-3">Brand</th>
                             <th class="px-4 py-3">Price</th>
-                            <th class="px-4 py-3">Stock Qty.</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Stock Qty.</th>
                             <th class="px-4 py-3">Discount</th>
                             <th class="px-4 py-3">Created by</th>
                             <th class="px-4 py-3">Updated by</th>
@@ -34,20 +34,20 @@
                                 <td class="px-4 py-3 text-sm">
                                     <p class="font-semibold">{{ $product->name }}</p>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
+                                <td class="px-4 py-3 text-xs">
                                     <p class="font-semibold">{{ $product->sku }}</p>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <p class="font-semibold">{{ $product->brand->name ?? '---' }}</p>
+                                <td class="px-4 py-3 text-xs">
+                                    <p class="">{{ $product->brand->name ?? '---' }}</p>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <p class="font-semibold">{{ $product->price }}</p>
+                                <td class="px-4 py-3 text-xs whitespace-nowrap">
+                                    <p>Tk {{ $product->price }}</p>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <p class="font-semibold">{{ $product->stock }}</p>
+                                <td class="px-4 py-3 text-xs">
+                                    <p>{{ $product->stock }}</p>
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <p class="font-semibold">{{ $product->discount_percentage }}</p>
+                                <td class="px-4 py-3 text-xs">
+                                    <p>{{ $product->discount_percentage }}%</p>
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'createdBy'])
@@ -56,7 +56,7 @@
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'updatedBy'])
                                 </td>
                                 <td class="flex items-center gap-4 px-4 py-3 text-xs">
-                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'delete'], 'route' => 'admin.products', 'route_key' => $product->slug])
+                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'show', 'delete'], 'route' => 'admin.products', 'route_key' => $product->id])
                                 </td>
                             </tr>
                         @empty
