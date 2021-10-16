@@ -39,7 +39,7 @@
     <span class="text-gray-700 dark:text-gray-200">
         Images
     </span>
-    <input type="file" name="product_images[]" class="block w-full p-2 mt-1 text-sm rounded dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-purple-400 form-input">
+    <input type="file" name="product_images[]" multiple class="block w-full p-2 mt-1 text-sm rounded dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-purple-400 form-input">
     @forelse ($errors->get('product_images') as $error)
         <p class="text-xs text-red-600 dark:text-red-400">
             {{ $error }}

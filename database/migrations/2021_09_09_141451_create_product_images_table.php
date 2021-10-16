@@ -22,7 +22,7 @@ class CreateProductImagesTable extends Migration
                 ->cascadeOnDelete();
                 
             $table->unsignedSmallInteger('sequence')->default(0);
-            $table->string('image', 500);
+            $table->string('path', 500);
             $table->text('description')->nullable();
             $table->timestamps();
         });

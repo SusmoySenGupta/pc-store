@@ -130,11 +130,11 @@
                 <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Images:</p>
             </div>
             <div class="flex flex-col items-start justify-center gap-2 sm:flex-row sm:items-center sm:justify-start">
-                <img src="https://via.placeholder.com/300" alt="Product Image" class="w-20 h-20 img-responsive">
-                <img src="https://via.placeholder.com/300" alt="Product Image" class="w-20 h-20 img-responsive">
-                <img src="https://via.placeholder.com/300" alt="Product Image" class="w-20 h-20 img-responsive">
-                <img src="https://via.placeholder.com/300" alt="Product Image" class="w-20 h-20 img-responsive">
-                <img src="https://via.placeholder.com/300" alt="Product Image" class="w-20 h-20 img-responsive">
+                @forelse ($product->images as $image)
+                    <img src="{{ Storage::url($image->path) }}" alt="Product Image" class="w-20 h-20 img-responsive">
+                @empty
+                <p class="text-xs text-gray-800 dark:text-gray-400">No image available</p>
+                @endforelse
             </div>
         </div>
 

@@ -54,6 +54,13 @@ class ProductController extends Controller
 
                 $product->tags()->attach($request->tags);
 
+                foreach ($request->product_images as $image) {
+                    $file_name = uniqid() . '.' . $image->extension();
+                    $image_path = $image->storeAs('public/images/products', $file_name);
+
+                    $product->images()->create(['path' => $image_path]);
+                }
+
                 Alert::toast("A new product '{$product->name}' has been created", 'success')
                 ->padding('0.3rem')
                 ->width('20rem')

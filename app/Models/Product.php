@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use PhpCollective\Tracker\Trackable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
+use PhpCollective\Tracker\Trackable;
 
 class Product extends Model
 {
@@ -35,7 +36,7 @@ class Product extends Model
         return $this->belongsTo(Brand::class)->withDefault();
     }
 
-     /**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category(): BelongsTo
@@ -49,6 +50,14 @@ class Product extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
     }
 
     /**
