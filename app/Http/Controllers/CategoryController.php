@@ -43,7 +43,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): RedirectResponse
     {
         try {
-            $category_name = Category::create($request->validated())->name;
+            $category_name = Category::create($request->all())->name;
 
             Alert::toast("A new category '${category_name}' has been created", 'success')
                 ->padding('0.3rem')
@@ -94,7 +94,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
         try {
-            $category->update($request->validated());
+            $category->update($request->all());
 
             Alert::toast("Category '{$category->name}' has been updated", 'success')
                 ->padding('0.3rem')

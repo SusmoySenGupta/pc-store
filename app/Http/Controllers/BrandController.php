@@ -41,7 +41,7 @@ class BrandController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $brand_name = Brand::create($request->validated())->name;
+            $brand_name = Brand::create($request->all())->name;
 
             Alert::toast("A new brand '${brand_name}' has been created", 'success')
                 ->padding('0.3rem')
@@ -79,7 +79,7 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand): RedirectResponse
     {
         try {
-            $brand->update($request->validated());
+            $brand->update($request->all());
             
             Alert::toast("A new brand '{$brand->name}' has been created", 'success')
                 ->padding('0.3rem')
