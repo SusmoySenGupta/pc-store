@@ -49,4 +49,13 @@ class User extends Authenticatable
     {
         return $query->where('role', 'admin');
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeCustomers($query)
+    {
+        return $query->where('role', 'customer');
+    }
 }
