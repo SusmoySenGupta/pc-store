@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
         {
             $table->id();
             
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
 

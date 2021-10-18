@@ -19,7 +19,7 @@ class CreateBuildsTable extends Migration
             $table->string('name');
             $table->string('build_code');
             
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
