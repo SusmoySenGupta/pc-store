@@ -43,7 +43,7 @@ class ComponentController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $component = Component::create($request->validated());
+            $component = Component::create($request->all());
 
             Alert::toast("A new component '{$component->name}' has been created", 'success')
                 ->padding('0.3rem')
@@ -94,7 +94,7 @@ class ComponentController extends Controller
     public function update(Request $request, Component $component): RedirectResponse
     {
         try {
-            $component->update($request->validated());
+            $component->update($request->all());
 
             Alert::toast("Component '{$component->name}' has been updated", 'success')
                 ->padding('0.3rem')

@@ -10,17 +10,21 @@
             @endif
             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
         </div>
+        <div>
+            <p class="font-semibold">{{ $model[$type]?->name }}</p>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+                @if ($type === 'createdBy' && $model->createdBy)
+                    {{ $model->created_at->diffForHumans() }}
+                @elseif ($type === 'updatedBy' && $model->updated_by)
+                    {{ $model->updated_at->diffForHumans() }}
+                @endif
+            </p>
+        </div>
     @else
-        <p class="font-semibold">No one has updated yet</p>
+        @if ($type === 'createdBy')
+            <p class="font-semibold">Created by the system</p>
+        @elseif ($type === 'updatedBy')
+            <p class="font-semibold">No one has updated yet</p>
+        @endif
     @endif
-    <div>
-        <p class="font-semibold">{{ $model[$type]?->name }}</p>
-        <p class="text-xs text-gray-600 dark:text-gray-400">
-            @if ($type === 'createdBy' && $model->createdBy)
-                {{ $model->created_at->diffForHumans() }}
-            @elseif ($type === 'updatedBy' && $model->updated_by)
-                {{ $model->updated_at->diffForHumans() }}
-            @endif
-        </p>
-    </div>
 </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::get('/dashboard', function ()
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
 {
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::get('/', DashboardController::class)->name('dashboard');
 
     Route::resources([
         'categories' => CategoryController::class,
@@ -39,7 +40,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
         'products'   => ProductController::class,
     ]);
 
-    Route::resource('components', ComponentController::class)->except('show');
+    // Route::resource('components', ComponentController::class)->except('show');
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
 });

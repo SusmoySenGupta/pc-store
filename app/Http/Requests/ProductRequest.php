@@ -22,9 +22,9 @@ class ProductRequest extends Request
             'price'               => ['required', 'numeric', 'gte:0', 'lte:100000000'],
             'stock'               => ['required', 'numeric', 'regex:/^[0-9]+$/', 'gte:0', 'lte:100000000'],
             'discount_percentage' => ['present', 'nullable', 'numeric', 'gte:0.0', 'lte:100.00'],
-            'tags'                => ['present', 'nullable', 'array'],
+            'tags'                => ['sometimes', 'nullable', 'array'],
             'tags.*'              => ['exists:tags,id'],
-            'description'         => ['present', 'nullable', 'min:4', 'max:1000'],
+            'description'         => ['present', 'nullable', 'min:4', 'max:2000'],
             'product_images'      => ['sometimes', 'nullable'],
             'product_images.*'    => ['sometimes', 'nullable', 'file', 'mimes:jpg,jpeg,png', 'max:4096'],
         ];

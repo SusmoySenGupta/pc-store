@@ -22,7 +22,7 @@ class CreateRatingsTable extends Migration
             ->constrained()
             ->nullOnDelete();
 
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
             ->nullable()
             ->constrained()
             ->nullOnDelete();

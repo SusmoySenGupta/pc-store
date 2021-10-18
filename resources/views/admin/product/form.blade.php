@@ -44,11 +44,13 @@
         Images
     </span>
     <div class="flex items-center justify-start gap-2">
-        @forelse ($product->images as $image)
-            <img src="{{ Storage::url($image->path) }}" alt="Product Image" class="w-28 img-responsive">
-        @empty
-        <p class="text-xs text-gray-800 dark:text-gray-400">No image available</p>
-        @endforelse
+        @isset($product)
+            @forelse ($product->images as $image)
+                <img src="{{ Storage::url($image->path) }}" alt="Product Image" class="w-28 img-responsive">
+            @empty
+            <p class="text-xs text-gray-800 dark:text-gray-400">No image available</p>
+            @endforelse
+        @endisset
     </div>
     <input type="file" name="product_images[]" multiple class="block w-full p-2 mt-1 text-sm rounded dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-purple-400 form-input">
     @forelse ($errors->get('product_images.*') as $product_image_errors)
