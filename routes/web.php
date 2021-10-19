@@ -31,7 +31,7 @@ Route::get('/dashboard', function ()
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function ()
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function ()
 {
     Route::get('/', DashboardController::class)->name('dashboard');
 
