@@ -1,14 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ComponentController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,18 +30,17 @@ Route::get('/dashboard', function ()
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function ()
+Route::middleware(['auth', 'verified'])->group(function ()
 {
-    Route::get('/', DashboardController::class)->name('dashboard');
-
-    Route::resources([
-        'categories' => CategoryController::class,
-        'brands'     => BrandController::class,
-        'products'   => ProductController::class,
-    ]);
-
-    // Route::resource('components', ComponentController::class)->except('show');
-    Route::resource('tags', TagController::class)->except('show');
-    Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
-    Route::resource('user', UserController::class)->only('index', 'edit', 'update');
+    Route::middleware(['is_admin'])->prefix('admin')->name('admin.')->group(function ()
+    {
+        Route::get('/dashboard', DashboardController::class)->name('dashboard');
+        Route::resource('user', UserController::class)->only('index', 'edit', 'update');
+        Route::resource('categories', CategoryController::class);
+        Route::resource('brands', BrandController::class);
+        Route::resource('products', ProductController::class);
+        Route::resource('tags', TagController::class)->except('show');
+        Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
+        // Route::resource('components', ComponentController::class)->except('show');
+    });
 });

@@ -31,6 +31,8 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
+        $this->authorize('view', $user);
+
         return view('admin.profile', compact('user'));
     }
 

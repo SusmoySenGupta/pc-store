@@ -14,6 +14,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    private const SUPER_ADMINISTRATOR = 1;
     /**
      * The attributes that are mass assignable.
      *
@@ -88,5 +89,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function scopeCustomers($query)
     {
         return $query->where('role', 'customer');
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->id === self::SUPER_ADMINISTRATOR;
     }
 }
