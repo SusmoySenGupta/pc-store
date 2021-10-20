@@ -28,7 +28,7 @@
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         @forelse ($products as $product)
                             <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">
+                                <td class="px-4 py-3 text-xs">
                                     {{ $loop->index + $products->firstItem() }}
                                 </td>
                                 <td class="px-4 py-3 text-xs">
@@ -47,16 +47,18 @@
                                     <p>{{ $product->stock }}</p>
                                 </td>
                                 <td class="px-4 py-3 text-xs">
-                                    <p>{{ $product->discount_percentage }}%</p>
+                                    <p>{{ $product->discount_percentage ?? 0 }}%</p>
                                 </td>
-                                <td class="px-4 py-3 text-xs">
+                                <td class="px-4 py-3 text-xs whitespace-nowrap">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'createdBy'])
                                 </td>
-                                <td class="px-4 py-3 text-xs">
+                                <td class="px-4 py-3 text-xs whitespace-nowrap">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'updatedBy'])
                                 </td>
-                                <td class="flex items-center gap-4 px-4 py-3 text-xs">
-                                    @include('components.forms.buttons.action-button', ['actions' => ['edit', 'show', 'delete'], 'route' => 'admin.products', 'route_key' => $product->id])
+                                <td class="px-4 py-3 text-xs whitespace-nowrap">
+                                    <div class="flex items-center gap-4 ">
+                                        @include('components.forms.buttons.action-button', ['actions' => ['edit', 'show', 'delete'], 'route' => 'admin.products', 'route_key' => $product->id])
+                                    </div>
                                 </td>
                             </tr>
                         @empty

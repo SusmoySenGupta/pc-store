@@ -13,24 +13,8 @@
     @include('components.forms.inputs.input-number', ['attribute' => 'stock', 'is_required' => true, 'label' => 'Stock amount', 'model' => $product ?? ''])
     @include('components.forms.inputs.input-number', ['attribute' => 'discount_percentage', 'is_required' => false, 'label' => 'Discount percentage', 'model' => $product ?? '', 'max' => 100.00])
 </div>
-<label class="block w-full mt-4 text-sm">
-    <span class="text-gray-700 dark:text-gray-400">
-        Tags
-    </span>
-    <select type="text" name="tags[]" multiple placeholder="Tags" class="block w-full mt-1 text-sm rounded dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-purple-400 form-input">
-        <option value="">-- Select Tags --</option>
-        @foreach ($tags as $tag_id => $tag)
-            <option value="{{ $tag_id }}" {{ in_array($tag_id, old('tag_id', $tag_ids ?? [])) ? ' selected' : '' }}>
-                {{ $tag }}
-            </option>
-        @endforeach
-    </select>
-    @foreach ($errors->get('tags') as $error)
-        <p class="text-xs text-red-600 dark:text-red-400 animate-pulse">
-            {{ $error }}
-        </p>
-    @endforeach
-</label>
+
+@include('components.forms.inputs.input-multiple-select', ['attribute' => 'tags', 'is_required' => false, 'label' => 'Tags', 'options' => $tags ?? [], 'selected_values' => $tag_ids ?? null])
 
 @include('components.forms.inputs.input-textarea', ['attribute' => 'description', 'is_required' => true, 'label' => 'Description', 'model' => $product ?? ''])
 
