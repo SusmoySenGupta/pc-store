@@ -1,9 +1,4 @@
 @csrf
-@if (session()->has('error'))
-    <div class="p-2 bg-red-100 rounded dark:bg-red-300 dark:text-gray-700">
-        {{ session('error') }}
-    </div>
-@endif
 <div class="flex flex-col sm:flex-row items-center sm:gap-4">
     @include('components.forms.inputs.input-text', ['attribute' => 'name', 'is_required' => true, 'label' => 'Product name', 'model' => $product ?? ''])
     @include('components.forms.inputs.input-text', ['attribute' => 'sku', 'is_required' => true, 'label' => 'SKU', 'model' => $product ?? ''])

@@ -1,9 +1,4 @@
 @csrf
-@if (session()->has('error'))
-    <div class="p-2 bg-red-100 rounded dark:bg-red-300 dark:text-gray-700">
-        {{ session('error') }}
-    </div>
-@endif
 <label class="block mt-4 text-sm">
     <span class="text-gray-700 dark:text-gray-400">
         Component name

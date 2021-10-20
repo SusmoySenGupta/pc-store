@@ -1,9 +1,4 @@
 @csrf
-@if (session()->has('error'))
-    <div class="p-2 bg-red-100 rounded dark:bg-red-300 dark:text-gray-700">
-        {{ session('error') }}
-    </div>
-@endif
 @include('components.forms.inputs.input-text', ['attribute' => 'name', 'label' => 'Category name', 'is_required' => true, 'model' => $category ?? ''])
 
 <label class="block mt-4 text-sm">
