@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Jobs\QueuedPasswordResetJob;
+use App\Jobs\QueuedVerifyEmailJob;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -41,9 +44,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function sendEmailVerificationNotification()
+    {
+        QueuedVerifyEmailJob::dispatch($this);
+    }
+
+    /**
+     * @param $token
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        QueuedPasswordResetJob::dispatch($this, $token);
+    }
+
     /**
      * The method for getting only admin users.
-     * 
+     *
      * @param $query
      * @return mixed
      */
@@ -54,7 +70,7 @@ class User extends Authenticatable
 
     /**
      * The method for getting only customer users.
-     * 
+     *
      * @param $query
      * @return mixed
      */
