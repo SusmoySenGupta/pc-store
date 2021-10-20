@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryRequest as Request;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -29,9 +29,9 @@ class CategoryController extends Controller
      */
     public function create(): View
     {
-        $parent_categories = Category::parents()->get();
+        $categories = Category::all();
 
-        return view('admin.category.create', compact('parent_categories'));
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -40,21 +40,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Requests\CategoryRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CategoryRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         try {
-            $category_name = Category::create($request->all())->name;
+            Category::create($request->all())->name;
 
-            Alert::toast("A new category '${category_name}' has been created", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-right')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Category created successfully', 'success');
 
-            return redirect()->route('admin.categories.index');
+            return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
         }
-        catch (\Exception $e)
+        catch (\Exception$e)
         {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
@@ -79,9 +74,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
-        $parent_categories = Category::parents()->get()->except($category->id);
+        $categories = Category::all()->except($category->id);
 
-        return view('admin.category.edit', compact('category', 'parent_categories'));
+        return view('admin.category.edit', compact('category', 'categories'));
     }
 
     /**
@@ -91,17 +86,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(CategoryRequest $request, Category $category): RedirectResponse
+    public function update(Request $request, Category $category): RedirectResponse
     {
         try {
             $category->update($request->all());
-
-            Alert::toast("Category '{$category->name}' has been updated", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-right')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            
+            toast('Category updated successfully', 'success');
 
             return redirect()->route('admin.categories.index');
         }
@@ -122,12 +112,7 @@ class CategoryController extends Controller
         try {
             $category->delete();
 
-            Alert::toast("Category '{$category->name}' has been deleted", 'error')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Category deleted successfully', 'error');
 
             return redirect()->route('admin.categories.index');
         }

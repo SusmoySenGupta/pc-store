@@ -16,32 +16,32 @@ class Category extends Model
     use HasFactory, SoftDeletes, NodeTrait, Trackable;
 
     /**
-     * @var array
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
      */
     protected $fillable = ['name', 'parent_id'];
 
     /**
+     * The attributes that should be cast.
+     *
      * @var array
      */
     protected $casts = [
         'parent_id' => 'integer',
     ];
 
+    /**
+     * The method to change the default route key.
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
     /**
-     * @param $value
-     */
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::slug($value, '-');
-    }
-
-    /**
+     * Query scope for parent categories.
+     *
      * @param $query
      * @return mixed
      */
@@ -51,15 +51,18 @@ class Category extends Model
     }
 
     /**
+     * Get the parent category.
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id', 'id')
-            ->withDefault();
+        return $this->belongsTo(Category::class, 'parent_id', 'id')->withDefault();
     }
 
-        /**
+    /**
+     * Get related products.
+     *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products(): HasMany
@@ -68,6 +71,8 @@ class Category extends Model
     }
 
     /**
+     * Get related user who created the category.
+     * 
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy(): BelongsTo
@@ -77,11 +82,23 @@ class Category extends Model
     }
 
     /**
+     * Get related user who updated the category.
+     * 
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by', 'id')
             ->withDefault();
+    }
+
+    /**
+     * The boot method for the model.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(fn ($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
     }
 }

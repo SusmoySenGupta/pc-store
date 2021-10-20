@@ -20,20 +20,9 @@ class CreateCategoriesTable extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
             $table->nestedSet();
-            
-            $table->foreignId('created_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
-            $table->foreignId('updated_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
             $table->timestamps();
             $table->softDeletes();
-
+            $table->track(true);
         });
     }
 
@@ -45,5 +34,9 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+
+        Schema::table('table', function (Blueprint $table) {
+            $table->dropTrack();
+        });
     }
 }
