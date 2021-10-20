@@ -6,7 +6,6 @@ use App\Http\Requests\BrandRequest as Request;
 use App\Models\Brand;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class BrandController extends Controller
 {
@@ -41,14 +40,9 @@ class BrandController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $brand_name = Brand::create($request->all())->name;
+            Brand::create($request->all());
 
-            Alert::toast("A new brand '${brand_name}' has been created", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Brand created successfully', 'success');
 
             return redirect()->route('admin.brands.index');
         }
@@ -80,13 +74,8 @@ class BrandController extends Controller
     {
         try {
             $brand->update($request->all());
-            
-            Alert::toast("A new brand '{$brand->name}' has been created", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+
+            toast('Brand updated successfully', 'success');
 
             return redirect()->route('admin.brands.index');
         }
@@ -107,12 +96,7 @@ class BrandController extends Controller
         try {
             $brand->delete();
 
-            Alert::toast("Brand '{$brand->name}' has been deleted", 'error')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Brand deleted successfully', 'error');
 
             return redirect()->route('admin.brands.index');
         }

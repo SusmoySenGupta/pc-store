@@ -18,7 +18,7 @@ class BrandRequest extends Request
             'name' => [
                 'required',
                 'regex:/^[a-zA-Z0-9\s]+$/',
-                'min:4', 'max:50',
+                'min:4', 'max:25',
                 Rule::unique('brands')->ignore($this->brand),
             ],
         ];

@@ -14,16 +14,23 @@ class Brand extends Model
     use HasFactory, Trackable;
 
     /**
-     * @var array
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
      */
     protected $fillable = ['name', 'slug', 'logo', 'description'];
 
+    /**
+     * The method to change the default route key.
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
     /**
+     * The method to set the slug attribute with name attribute.
+     * 
      * @param $value
      */
     public function setNameAttribute($value)
@@ -33,6 +40,8 @@ class Brand extends Model
     }
 
     /**
+     * Get all the related products.
+     * 
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products(): HasMany
@@ -41,6 +50,8 @@ class Brand extends Model
     }
 
     /**
+     * Get related user who created the category.
+     * 
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy(): BelongsTo
@@ -50,6 +61,8 @@ class Brand extends Model
     }
 
     /**
+     * Get related user who created the category.
+     * 
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function updatedBy(): BelongsTo
