@@ -57,6 +57,17 @@ class User extends Authenticatable implements MustVerifyEmail
         QueuedPasswordResetJob::dispatch($this, $token);
     }
 
+        /**
+     * The method for getting only admin users.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeExceptSuperAdmin($query)
+    {
+        return $query->where('role', '!=', 'super-admin');
+    }
+
     /**
      * The method for getting only admin users.
      *

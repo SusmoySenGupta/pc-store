@@ -12,6 +12,18 @@ use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index(): View
+    {
+        $users = User::exceptSuperAdmin()->latest()->paginate(10);
+
+        return view('admin.all-users', compact('users'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user

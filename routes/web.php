@@ -44,5 +44,5 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Route::resource('components', ComponentController::class)->except('show');
     Route::resource('tags', TagController::class)->except('show');
     Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
-    Route::resource('user', UserController::class)->only('show', 'edit', 'update');
+    Route::resource('user', UserController::class)->only('index', 'edit', 'update');
 });

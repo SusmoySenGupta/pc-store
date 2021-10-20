@@ -19,8 +19,9 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request): View
     {
-        $users = User::all()->except(auth()->id())->sortBy('role');
-        $total_users = $users->count();
+        $users_except_super_admins = User::exceptSuperAdmin();
+        $users = $users_except_super_admins->limit(10)->get();
+        $total_users = $users_except_super_admins->count();
 
         $orders                 = Order::all();
         $total_delivered_orders = $orders->where('is_delivered', 1)->count();

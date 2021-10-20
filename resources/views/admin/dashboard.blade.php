@@ -102,7 +102,7 @@
                                         <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                     </div>
                                     <div>
-                                        <p class="font-semibold">{{ $user->name }}</p>
+                                        <p class="font-semibold">{{ $user->name }} {{ auth()->user()->id == $user->id ? '(You)' : '' }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
                                             {{ Str::ucfirst($user->role) }}
                                         </p>
@@ -128,10 +128,21 @@
                             </td>
                         </tr>
                     @empty
-
+                        <tr class="text-center text-gray-700 dark:text-gray-400">
+                            <td colspan="10" class="px-4 py-3 text-sm">
+                                No users found
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        @if ($total_users > 5)
+            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                <a href="#" class="flex items-center col-span-3">
+                    See all users
+                </a>
+            </div>
+        @endif
     </div>
 @endsection
