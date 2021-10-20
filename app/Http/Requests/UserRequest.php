@@ -15,21 +15,20 @@ class UserRequest extends Request
     public function rules()
     {
         return [
-            'name'    => [
+            'name' => [
                 'required',
                 'min:4',
                 'max:50',
                 'regex:/^[a-zA-Z0-9\s]+$/',
             ],
-            'email'   => [
+            'email' => [
                 'required',
                 'email',
                 Rule::unique('users', 'email')->ignore($this->user),
             ],
-            'phone'   => [
+            'phone' => [
                 'required',
                 'digits:11',
-                // 'digits_between:11,11',
                 Rule::unique('users', 'phone')->ignore($this->user),
             ],
             'address' => [
@@ -42,7 +41,14 @@ class UserRequest extends Request
                 'sometimes',
                 'nullable',
                 'digits_between:4,5',
-            ]
+            ],
+            'profile_photo' => [
+                'sometimes',
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png',
+                'max:4096',
+            ],
         ];
     }
 }

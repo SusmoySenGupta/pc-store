@@ -2,25 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UserRequest as Request;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -42,6 +32,21 @@ class UserController extends Controller
     public function update(Request $request, User $user): RedirectResponse
     {
         try {
+            if ($request->hasFile('profile_photo'))
+            {
+                $image = $request->file('profile_photo');
+
+                if (Storage::exists($user->profile_photo))
+                {
+                    Storage::delete($user->profile_photo);
+                }
+
+                $file_name  = uniqid() . '.' . $image->extension();
+                $image_path = $image->storeAs('public/images/profile', $file_name);
+
+                $user->profile_photo = $image_path;
+            }
+
             $user->update($request->all());
 
             Alert::toast('Profile updated successfully', 'success')
@@ -52,7 +57,6 @@ class UserController extends Controller
                 ->timerProgressBar();
 
             return redirect()->route('admin.user.edit', $user->id);
-
         }
         catch (\Exception$e)
         {
