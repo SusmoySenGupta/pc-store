@@ -1,6 +1,4 @@
 @extends('layouts.admin.app')
-
-@section('title', 'Pc store - Orders')
 @section('heading', 'Orders')
 
 @section('content')
@@ -87,7 +85,7 @@
                         @empty
                             <tr class="text-center text-gray-700 dark:text-gray-400">
                                 <td colspan="10" class="px-4 py-3 text-sm">
-                                    No tags found
+                                    No orders found
                                 </td>
                             </tr>
                         @endforelse

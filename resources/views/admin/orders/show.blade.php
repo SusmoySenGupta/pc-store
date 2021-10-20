@@ -1,6 +1,4 @@
 @extends('layouts.admin.app')
-
-@section('title', 'Pc Store - Order Details')
 @section('heading', 'Order Details')
 
 @section('content')
@@ -29,31 +27,31 @@
 
         <div class="flex flex-col gap-2 my-2">
             <div class="flex items-center justify-between mb-1">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Order number:</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Order number:</p>
                 <span class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-200 rounded-full dark:text-white dark:bg-blue-600">
                     #{{ $order->id }}
                 </span>
             </div>
             <div class="flex items-center justify-between">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Customer name:</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer name:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
                     {{ $order->customer->name }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Customer phone:</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer phone:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
                     {{ $order->customer->phone }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Customer email:</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer email:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
                     {{ $order->customer->email }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Delivery address:</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Delivery address:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
                     {{ $order->shipping_address }}
                 </p>
@@ -75,17 +73,17 @@
                 @endphp
                 <div class="flex items-center justify-between">
                     <div class="flex items-center justify-start gap-4">
-                        <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
+                        <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200 whitespace-nowrap">
                             {{ $orderDetail->quantity }}x
                         </p>
                         <p class="text-xs text-gray-800 dark:text-gray-400">
                             {{ $orderDetail->product->name }}
                         </p>
                     </div>
-                    <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">Tk {{ round($orderDetail->quantity * $orderDetail->product->price) }}</p>
+                    <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200 whitespace-nowrap">Tk {{ round($orderDetail->quantity * $orderDetail->product->price) }}</p>
                 </div>
             @empty
-                <p class="text-xs font-semibold text-center text-red-600 break-words dark:text-gray-200">
+                <p class="text-xs font-semibold text-center text-red-600 break-words dark:text-gray-200 whitespace-nowrap">
                     Something went wrong
                 </p>
             @endforelse
@@ -95,12 +93,12 @@
 
         <div class="flex flex-col gap-2 my-2">
             <div class="flex items-center justify-between">
-                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Subtotal:</p>
-                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Tk {{ $sub_total }}</p>
+                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap">Subtotal:</p>
+                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap">Tk {{ $sub_total }}</p>
             </div>
             <div class="flex items-center justify-between">
-                <p class="text-xs text-gray-800 dark:text-gray-400">Discount:</p>
-                <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">- Tk {{ round($discount_amount) }}</p>
+                <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Discount:</p>
+                <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200 whitespace-nowrap">- Tk {{ round($discount_amount) }}</p>
             </div>
         </div>
 
@@ -108,8 +106,8 @@
 
         <div class="flex flex-col gap-2 my-2">
             <div class="flex items-center justify-between px-1 py-2 bg-gray-100 rounded dark:bg-gray-700">
-                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Total:</p>
-                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Tk {{ round($sub_total) - round($discount_amount) }}</p>
+                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap">Total:</p>
+                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap">Tk {{ round($sub_total) - round($discount_amount) }}</p>
             </div>
         </div>
 

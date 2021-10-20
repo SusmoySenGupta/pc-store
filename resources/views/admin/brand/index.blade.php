@@ -1,6 +1,4 @@
 @extends('layouts.admin.app')
-
-@section('title', 'Pc store - Brands')
 @section('heading', 'Brands')
 
 @section('content')
