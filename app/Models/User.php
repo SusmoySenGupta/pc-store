@@ -42,6 +42,8 @@ class User extends Authenticatable
     ];
 
     /**
+     * The method for getting only admin users.
+     * 
      * @param $query
      * @return mixed
      */
@@ -51,6 +53,8 @@ class User extends Authenticatable
     }
 
     /**
+     * The method for getting only customer users.
+     * 
      * @param $query
      * @return mixed
      */
