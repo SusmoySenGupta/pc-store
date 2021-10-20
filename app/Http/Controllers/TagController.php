@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\TagRequest as Request;
+use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class TagController extends Controller
 {
@@ -41,20 +40,15 @@ class TagController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $tag = Tag::create($request->all());
+            Tag::create($request->all());
 
-            Alert::toast("A new tag '{$tag->name}' has been created", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Tag created successfully', 'success');
 
             return redirect()->route('admin.tags.index');
         }
         catch (\Exception$e)
         {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
     }
 
@@ -81,18 +75,13 @@ class TagController extends Controller
         try {
             $tag->update($request->all());
 
-            Alert::toast("A new tag '{$tag->name}' has been updated", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Category updated successfully', 'success');
 
             return redirect()->route('admin.tags.index');
         }
         catch (\Exception$e)
         {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
     }
 
@@ -107,12 +96,7 @@ class TagController extends Controller
         try {
             $tag->delete();
 
-            Alert::toast("'{$tag->name}' has been deleted", 'error')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            toast('Category deleted successfully', 'success');
 
             return redirect()->route('admin.tags.index');
         }

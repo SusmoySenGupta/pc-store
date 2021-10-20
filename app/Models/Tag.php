@@ -14,11 +14,15 @@ class Tag extends Model
     use HasFactory, Trackable;
 
     /**
-     * @var array
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
      */
     protected $fillable = ['name', 'slug'];
 
     /**
+     * The method to set the slug attribute with name attribute.
+     *
      * @param $value
      */
     public function setNameAttribute($value)
@@ -27,12 +31,17 @@ class Tag extends Model
         $this->attributes['slug'] = Str::slug($value, '-');
     }
 
+    /**
+     * The method to change the default route key.
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
     /**
+     * Get all the related products.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products(): BelongsToMany
@@ -41,6 +50,8 @@ class Tag extends Model
     }
 
     /**
+     * Get related user who created the tag.
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy(): BelongsTo
@@ -50,6 +61,8 @@ class Tag extends Model
     }
 
     /**
+     * Get related user who updated the tag.
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function updatedBy(): BelongsTo
