@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('heading', 'Categories')
+@section('heading', 'Trashed categories')
 
 @section('content')
     <div class="mb-10">
