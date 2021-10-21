@@ -11,12 +11,14 @@
             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
         </div>
         <div>
-            <p class="font-semibold">{{ $model[$type]?->name }}</p>
+            <p class="font-semibold">{{ $model[$type]?->id === auth()->user()->id ? 'You' : $model[$type]?->name }}</p>
             <p class="text-xs text-gray-600 dark:text-gray-400">
                 @if ($type === 'createdBy' && $model->createdBy)
                     {{ $model->created_at->diffForHumans() }}
                 @elseif ($type === 'updatedBy' && $model->updated_by)
                     {{ $model->updated_at->diffForHumans() }}
+                @elseif ($type === 'deletedBy' && $model->updated_by)
+                    {{ $model->deleted_at->diffForHumans() }}
                 @endif
             </p>
         </div>
@@ -24,7 +26,9 @@
         @if ($type === 'createdBy')
             <p class="font-semibold">Created by the system</p>
         @elseif ($type === 'updatedBy')
-            <p class="font-semibold">No one has updated yet</p>
+            <p class="font-semibold">None</p>
+        @elseif ($type === 'deletedBy')
+            <p class="font-semibold">Trashed by the system</p>
         @endif
     @endif
 </div>

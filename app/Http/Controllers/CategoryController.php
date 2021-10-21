@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest as Request;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\View\View;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        // $this->authorizeResource(Category::class, 'category');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -90,7 +95,7 @@ class CategoryController extends Controller
     {
         try {
             $category->update($request->all());
-            
+
             toast('Category updated successfully', 'success');
 
             return redirect()->route('admin.categories.index');
@@ -120,5 +125,72 @@ class CategoryController extends Controller
         {
             return redirect()->back()->with('error', $e->getMessage());
         };
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function trashed(): view
+    {
+        $this->authorize('viewany', Category::class);
+
+        $categories = Category::onlyTrashed()
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.category.trashed', compact('categories'));
+    }
+
+    /**
+     * Restore the specified category.
+     *
+     * @param  \Illuminate\Http\Request  $http_request
+     * @param int $category_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(HttpRequest $http_request, $category_id): RedirectResponse
+    {
+        $category = Category::withTrashed()->findOrFail($category_id);
+
+        $this->authorize('restore', $category);
+
+        try {
+            $category->restore();
+
+            toast('Category restored successfully', 'success');
+
+            return redirect()->route('admin.categories.trashed');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->withInput()->withError($e->getMessage());
+        }
+    }
+
+    /**
+     * Permanently deletes the specified category.
+     *
+     * @param int $category_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function forceDelete($category_id): RedirectResponse
+    {
+        $category = Category::withTrashed()->findOrFail($category_id);
+
+        $this->authorize('forceDelete', $category);
+
+        try {
+            $category->forceDelete();
+
+            toast('Category deleted permanently', 'error');
+
+            return redirect()->route('admin.categories.trashed');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->withInput()->withError($e->getMessage());
+        }
     }
 }

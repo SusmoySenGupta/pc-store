@@ -14,13 +14,38 @@
     </a>
 @endif
 @if (in_array('delete', $actions))
-    <form action="{{ route($route . '.destroy', $route_key) }}" method="POST" onsubmit="return confirm('Do you want to delete {{ $name ?? '' }}?')">
+    <form action="{{ route($route . '.destroy', $route_key) }}" method="POST" onsubmit="return confirm('Do you want to trash {{ $name ?? '' }}?')">
         @csrf
         @method('DELETE')
         <button type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block w-6 h-6 text-red-500 transition duration-500 ease-in-out transform dark:text-gray-400 dark:hover:text-red-600 hover:-translate-y-1 hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="block w-6 h-6 text-orange-500 transition duration-500 ease-in-out transform dark:text-gray-400 dark:hover:text-orange-500 hover:-translate-y-1 hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
         </button>
     </form>
+@endif
+@if (in_array('restore', $actions))
+    @can('viewany', $model ?? null)
+        <form action="{{ route($route . '.restore', $route_key) }}" method="POST">
+            @csrf
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="block w-6 h-6 text-green-500 transition duration-500 ease-in-out transform dark:text-gray-400 dark:hover:text-green-600 hover:-translate-y-1 hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </form>
+    @endcan
+@endif
+@if (in_array('force_delete', $actions))
+    @can('viewany', $model ?? null)
+        <form action="{{ route($route . '.force_delete', $route_key) }}" method="POST" onsubmit="return confirm('It will be deleted forever. Do you want to delete {{ $name ?? '' }} forever?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="block w-6 h-6 text-red-500 transition duration-500 ease-in-out transform dark:text-gray-400 dark:hover:text-red-600 hover:-translate-y-1 hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </button>
+        </form>
+    @endcan
 @endif

@@ -15,9 +15,10 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens, HasFactory, Notifiable;
 
     private const SUPER_ADMINISTRATOR = 1;
-    public const ROLE_SUPER_ADMIN = 'super-admin';
-    public const ROLE_ADMIN = 'admin';
-    public const ROLE_CUSTOMER = 'customer';
+    public const ROLE_SUPER_ADMIN     = 'super-admin';
+    public const ROLE_ADMIN           = 'admin';
+    public const ROLE_CUSTOMER        = 'customer';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -61,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         QueuedPasswordResetJob::dispatch($this, $token);
     }
 
-        /**
+    /**
      * The method for getting only admin users.
      *
      * @param $query
@@ -94,8 +95,33 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('role', self::ROLE_CUSTOMER);
     }
 
-    public function isSuperAdmin()
+    /**
+     * Determines whether the user is a super administrator.
+     * 
+     * @return bool
+     */
+    public function isSuperAdmin(): bool
     {
-        return $this->id === self::SUPER_ADMINISTRATOR;
+        return $this->role === self::ROLE_SUPER_ADMIN;
+    }
+
+    /**
+     * Determines whether the user is an administrator.
+     * 
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Determines whether the user is a customer.
+     * 
+     * @return bool
+     */
+    public function isCustomer(): bool
+    {
+        return $this->role === self::ROLE_CUSTOMER;
     }
 }

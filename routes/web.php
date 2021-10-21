@@ -25,18 +25,29 @@ Route::get('/', function ()
     return view('welcome');
 });
 
-Route::get('/dashboard', function ()
-{
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::middleware(['is_admin'])->prefix('admin')->name('admin.')->group(function ()
     {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::resource('user', UserController::class)->only('index', 'edit', 'update');
-        Route::resource('categories', CategoryController::class);
+
+        //Categories routes
+        Route::prefix('categories')->as('categories.')->group(function ()
+        {
+            Route::get('/trashed', [CategoryController::class, 'trashed'])
+                ->name('trashed');
+
+            Route::post('/restore/{category_id}', [CategoryController::class, 'restore'])
+                ->name('restore');
+
+            Route::delete('/force-delete/{category_id}', [CategoryController::class, 'forceDelete'])
+                ->name('force_delete');
+
+            Route::resource('/', CategoryController::class)
+                ->parameter('', 'category');
+        });
+
         Route::resource('brands', BrandController::class);
         Route::resource('products', ProductController::class);
         Route::resource('tags', TagController::class)->except('show');
