@@ -111,5 +111,9 @@ class Category extends Model
         parent::boot();
 
         static::saving(fn($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
+        
+        static::softDeleted(fn($category) => $category->deleted_by = auth()->user()->id);
+
+        static::deleting(fn($category) => $category->deleted_by = null);
     }
 }

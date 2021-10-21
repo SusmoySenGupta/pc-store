@@ -117,7 +117,7 @@ class BrandController extends Controller
         $this->authorize('viewany', Brand::class);
 
         $brands = Brand::onlyTrashed()
-            ->latest()
+            ->orderBy('deleted_at', 'DESC')
             ->paginate(10);
 
         return view('admin.brand.trashed', compact('brands'));

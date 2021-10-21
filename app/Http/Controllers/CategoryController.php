@@ -137,7 +137,7 @@ class CategoryController extends Controller
         $this->authorize('viewany', Category::class);
 
         $categories = Category::onlyTrashed()
-            ->latest()
+            ->orderBy('deleted_at', 'DESC')
             ->paginate(10);
 
         return view('admin.category.trashed', compact('categories'));
