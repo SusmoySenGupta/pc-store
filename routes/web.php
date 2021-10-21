@@ -48,7 +48,22 @@ Route::middleware(['auth', 'verified'])->group(function ()
                 ->parameter('', 'category');
         });
 
-        Route::resource('brands', BrandController::class);
+        //Brand routes
+        Route::prefix('brands')->as('brands.')->group(function ()
+        {
+            Route::get('/trashed', [BrandController::class, 'trashed'])
+                ->name('trashed');
+
+            Route::post('/restore/{brand_id}', [BrandController::class, 'restore'])
+                ->name('restore');
+
+            Route::delete('/force-delete/{brand_id}', [BrandController::class, 'forceDelete'])
+                ->name('force_delete');
+
+            Route::resource('/', BrandController::class)
+                ->parameter('', 'brand');
+        });
+
         Route::resource('products', ProductController::class);
         Route::resource('tags', TagController::class)->except('show');
         Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
