@@ -14,7 +14,6 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    private const SUPER_ADMINISTRATOR = 1;
     public const ROLE_SUPER_ADMIN     = 'super-admin';
     public const ROLE_ADMIN           = 'admin';
     public const ROLE_CUSTOMER        = 'customer';
