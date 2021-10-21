@@ -1,12 +1,9 @@
 @extends('layouts.admin.app')
-@section('heading', 'Products')
+@section('heading', 'Trashed products')
 
 @section('content')
     <div class="mb-10">
-        <div class="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            @include('components.forms.buttons.create-button', ['route' => 'admin.products.create', 'label' => 'Create new product'])
-            @include('admin.partials.trashed-link', ['route' => 'admin.products.trashed', 'model' => 'App\Models\Product'])
-        </div>
+        @include('components.forms.buttons.back-button', ['base' => 'admin.products.index'])
         <div class="w-full mt-4 overflow-hidden border rounded-lg shadow-xs dark:border-none">
             <div class="w-full overflow-x-auto">
                 <table class="w-full">
@@ -15,9 +12,6 @@
                             <th class="px-4 py-3">#</th>
                             <th class="px-4 py-3">Name</th>
                             <th class="px-4 py-3">SKU</th>
-                            <th class="px-4 py-3">Price</th>
-                            <th class="px-4 py-3 whitespace-nowrap">Stock Qty.</th>
-                            <th class="px-4 py-3">Discount</th>
                             <th class="px-4 py-3">Created by</th>
                             <th class="px-4 py-3">Updated by</th>
                             <th class="px-4 py-3">Action</th>
@@ -36,30 +30,19 @@
                                     <p class="font-semibold">{{ $product->sku }}</p>
                                 </td>
                                 <td class="px-4 py-3 text-xs whitespace-nowrap">
-                                    <p>Tk {{ $product->price }}</p>
-                                </td>
-                                <td class="px-4 py-3 text-xs">
-                                    <p>{{ $product->stock }}</p>
-                                </td>
-                                <td class="px-4 py-3 text-xs">
-                                    <p>{{ $product->discount_percentage ?? 0 }}%</p>
-                                </td>
-                                <td class="px-4 py-3 text-xs whitespace-nowrap">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'createdBy'])
                                 </td>
                                 <td class="px-4 py-3 text-xs whitespace-nowrap">
                                     @include('components.forms.profile-with-time', ['model' => $product, 'type' => 'updatedBy'])
                                 </td>
-                                <td class="px-4 py-3 text-xs whitespace-nowrap">
-                                    <div class="flex items-center gap-2 ">
-                                        @include('components.forms.buttons.action-button', ['actions' => ['edit', 'show', 'delete'], 'route' => 'admin.products', 'route_key' => $product->id])
-                                    </div>
+                                <td class="flex items-center gap-4 px-4 py-3 text-xs">
+                                    @include('components.forms.buttons.action-button', ['actions' => ['restore', 'force_delete'], 'route' => 'admin.products', 'route_key' => $product->id, 'model' => $product ?? null])
                                 </td>
                             </tr>
                         @empty
                             <tr class="text-center text-gray-700 dark:text-gray-400">
                                 <td colspan="10" class="px-4 py-3 text-sm">
-                                    No products found
+                                    No trashed products found
                                 </td>
                             </tr>
                         @endforelse

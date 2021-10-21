@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -55,13 +56,13 @@ class ProductController extends Controller
 
                 $product->tags()->attach($request->tags);
 
-                if($request->product_image)
+                if ($request->product_image)
                 {
                     foreach ($request->product_images as $image)
                     {
                         $file_name  = uniqid() . '.' . $image->extension();
                         $image_path = $image->storeAs('public/images/products', $file_name);
-    
+
                         $product->images()->create(['path' => $image_path]);
                     }
                 }
@@ -171,5 +172,72 @@ class ProductController extends Controller
         {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         };
+    }
+
+    /**
+     * Display a listing of the deleted resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function trashed(): view
+    {
+        $this->authorize('viewany', Product::class);
+
+        $products = Product::onlyTrashed()
+            ->orderBy('deleted_at', 'DESC')
+            ->paginate(10);
+
+        return view('admin.product.trashed', compact('products'));
+    }
+
+    /**
+     * Restore the specified product.
+     *
+     * @param  \Illuminate\Http\Request  $http_request
+     * @param int $product_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(HttpRequest $http_request, $product_id): RedirectResponse
+    {
+        $product = Product::withTrashed()->findOrFail($product_id);
+
+        $this->authorize('restore', $product);
+
+        try {
+            $product->restore();
+
+            toast('Product restored successfully', 'success');
+
+            return redirect()->route('admin.products.trashed');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->withInput()->withError($e->getMessage());
+        }
+    }
+
+    /**
+     * Permanently deletes the specified product.
+     *
+     * @param int $product_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function forceDelete($product_id): RedirectResponse
+    {
+        $product = Product::withTrashed()->findOrFail($product_id);
+
+        $this->authorize('forceDelete', $product);
+
+        try {
+            $product->forceDelete();
+
+            toast('Product deleted permanently', 'error');
+
+            return redirect()->route('admin.products.trashed');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->withInput()->withError($e->getMessage());
+        }
     }
 }

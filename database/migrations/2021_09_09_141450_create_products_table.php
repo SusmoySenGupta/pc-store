@@ -36,15 +36,7 @@ class CreateProductsTable extends Migration
                 ->on('categories')
                 ->onDelete('cascade');
 
-            $table->foreignId('created_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
-
-            $table->foreignId('updated_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete();
+            $table->track(true);
 
             $table->timestamps();
             $table->softDeletes();

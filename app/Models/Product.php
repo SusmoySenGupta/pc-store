@@ -13,7 +13,7 @@ use PhpCollective\Tracker\Trackable;
 
 class Product extends Model
 {
-    use HasFactory, Trackable, SoftDeletes;
+    use HasFactory, SoftDeletes, Trackable;
 
     /**
      * The attributes that are not mass assignable.
@@ -106,5 +106,28 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id')
             ->withDefault();
+    }
+
+    /**
+     * Get related user who deleted the product.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function deletedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * The boot method for the model.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::softDeleted(fn($product) => $product->deleted_by = auth()->user()->id);
+
+        static::deleting(fn($product) => $product->deleted_by = null);
     }
 }

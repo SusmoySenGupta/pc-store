@@ -64,7 +64,22 @@ Route::middleware(['auth', 'verified'])->group(function ()
                 ->parameter('', 'brand');
         });
 
-        Route::resource('products', ProductController::class);
+        //Product routes
+        Route::prefix('products')->as('products.')->group(function ()
+        {
+            Route::get('/trashed', [ProductController::class, 'trashed'])
+                ->name('trashed');
+
+            Route::post('/restore/{product_id}', [ProductController::class, 'restore'])
+                ->name('restore');
+
+            Route::delete('/force-delete/{product_id}', [ProductController::class, 'forceDelete'])
+                ->name('force_delete');
+
+            Route::resource('/', ProductController::class)
+                ->parameter('', 'product');
+        });
+
         Route::resource('tags', TagController::class)->except('show');
         Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
         // Route::resource('components', ComponentController::class)->except('show');
