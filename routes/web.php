@@ -27,7 +27,7 @@ Route::get('/', function ()
 
 Route::middleware(['auth', 'verified'])->group(function ()
 {
-    Route::middleware(['is_admin'])->prefix('admin')->name('admin.')->group(function ()
+    Route::middleware(['is_super_admin_or_admin'])->prefix('admin')->name('admin.')->group(function ()
     {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::resource('user', UserController::class)->only('index', 'edit', 'update');
