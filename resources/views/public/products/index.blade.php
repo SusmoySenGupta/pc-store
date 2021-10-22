@@ -15,16 +15,16 @@
             <h1 class="mb-8 text-3xl font-medium text-center text-gray-900 title-font sm:text-4xl">
                 {{ $category->name }}
             </h1>
-            <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
+            <div class="flex flex-wrap items-center justify-center gap-2 mb-12">
                 @foreach ($category->descendants as $sub_category)
                     <a href="{{ route('category_product', $sub_category) }}" class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full whitespace-nowrap">
                         {{ $sub_category->name }}
                     </a>
                 @endforeach
             </div>
-            <div class="flex flex-wrap justify-center -m-4 gap-4">
+            <div class="flex flex-wrap justify-center gap-4 -m-4">
                 @forelse ($products as $product)
-                    <div class="w-full flex flex-col justify-between p-4 lg:w-1/4 md:w-1/2 hover:shadow-lg">
+                    <div class="flex flex-col justify-between w-full p-4 rounded lg:w-1/4 md:w-1/2 hover:shadow-lg">
                         <div>
                             <a class="relative block h-48 overflow-hidden rounded">
                                 <img alt="product" class="block object-cover object-center w-full h-full" src="{{ Storage::url($product->images->first()->path) }}">
@@ -49,7 +49,7 @@
                         </button>
                     </div>
                 @empty
-                    <p class="text-xl">Products coming soon!</p>
+                    <p class="text-xl animate-pulse">Products coming soon!</p>
                 @endforelse
             </div>
         </div>
