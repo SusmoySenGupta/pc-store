@@ -125,8 +125,13 @@ class Product extends Model
     public static function boot()
     {
         parent::boot();
-
-        static::softDeleted(fn($product) => $product->deleted_by = auth()->user()->id);
+        
+        static::softDeleted(function($product) {
+            $time = time();
+            $product->name = $time . '-' . $product->name;
+            $product->slug = $time . '-' . $product->slug;
+            $product->deleted_by = auth()->user()->id;
+        });
 
         static::deleting(fn($product) => $product->deleted_by = null);
     }

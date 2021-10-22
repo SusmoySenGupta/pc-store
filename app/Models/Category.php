@@ -112,7 +112,12 @@ class Category extends Model
 
         static::saving(fn($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
         
-        static::softDeleted(fn($category) => $category->deleted_by = auth()->user()->id);
+        static::softDeleted(function($category) {
+            $time = time();
+            $category->name = $time . '-' . $category->name;
+            $category->slug = $time . '-' . $category->slug;
+            $category->deleted_by = auth()->user()->id;
+        });
 
         static::deleting(fn($category) => $category->deleted_by = null);
     }

@@ -90,7 +90,12 @@ class Brand extends Model
     {
         parent::boot();
 
-        static::softDeleted(fn($brand) => $brand->deleted_by = auth()->user()->id);
+        static::softDeleted(function($brand) {
+            $time = time();
+            $brand->name = $time . '-' . $brand->name;
+            $brand->slug = $time . '-' . $brand->slug;
+            $brand->deleted_by = auth()->user()->id;
+        });
 
         static::deleting(fn($brand) => $brand->deleted_by = null);
     }
