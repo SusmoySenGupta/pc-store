@@ -1,6 +1,4 @@
 @extends('layouts.admin.app')
-
-@section('title', 'Create Brand')
 @section('heading', 'Create Brand')
 
 @section('content')

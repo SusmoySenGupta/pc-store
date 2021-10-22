@@ -1,7 +1,7 @@
 @csrf
 @include('components.forms.inputs.input-text', [
 'attribute' => 'name',
-'is_required' => '',
+'is_required' => true,
 'label' => 'Brand name',
 'model' => $brand ?? '',
 ])

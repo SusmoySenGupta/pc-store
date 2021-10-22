@@ -1,12 +1,11 @@
 @extends('layouts.admin.app')
-
-@section('title', 'Pc store - Brands')
 @section('heading', 'Brands')
 
 @section('content')
     <div class="mb-10">
-        <div class="flex items-center">
-            @include('components.forms.buttons.create-button', ['route' => 'admin.brands.create', 'label' => 'Create new brand'])
+        <div class="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            @include('components.forms.buttons.create-button', ['label' => 'Create new brand', 'route' => 'admin.brands.create'])
+            @include('admin.partials.trashed-link', ['route' => 'admin.brands.trashed', 'model' => 'App\Models\Brand'])
         </div>
         <div class="w-full mt-4 overflow-hidden border rounded-lg shadow-xs dark:border-none">
             <div class="w-full overflow-x-auto">

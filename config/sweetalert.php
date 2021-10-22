@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'timer' => env('SWEET_ALERT_TIMER', 5000),
+    'timer' => env('SWEET_ALERT_TIMER', 2000),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ return [
     | for particular modal just use the width() helper method.
     */
 
-    'width' => env('SWEET_ALERT_WIDTH', '32rem'),
+    'width' => env('SWEET_ALERT_WIDTH', '18rem'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     | for particular modal just use the padding() helper method.
     */
 
-    'padding' => env('SWEET_ALERT_PADDING', '1.25rem'),
+    'padding' => env('SWEET_ALERT_PADDING', '0.3rem'),
 
     /*
     |--------------------------------------------------------------------------
@@ -183,14 +183,14 @@ return [
 
     'customClass' => [
 
-        'container' => env('SWEET_ALERT_CONTAINER_CLASS'),
+        'container' => env('SWEET_ALERT_CONTAINER_CLASS', 'background-color: #6B7280'),
         'popup' => env('SWEET_ALERT_POPUP_CLASS'),
         'header' => env('SWEET_ALERT_HEADER_CLASS'),
         'title' => env('SWEET_ALERT_TITLE_CLASS'),
         'closeButton' => env('SWEET_ALERT_CLOSE_BUTTON_CLASS'),
         'icon' => env('SWEET_ALERT_ICON_CLASS'),
         'image' => env('SWEET_ALERT_IMAGE_CLASS'),
-        'content' => env('SWEET_ALERT_CONTENT_CLASS'),
+        'content' => env('SWEET_ALERT_CONTENT_CLASS', 'text-xs'),
         'input' => env('SWEET_ALERT_INPUT_CLASS'),
         'actions' => env('SWEET_ALERT_ACTIONS_CLASS'),
         'confirmButton' => env('SWEET_ALERT_CONFIRM_BUTTON_CLASS'),

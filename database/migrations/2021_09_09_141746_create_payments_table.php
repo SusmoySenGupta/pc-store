@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
         {
             $table->id();
 
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();

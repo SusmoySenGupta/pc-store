@@ -5,38 +5,43 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Kalnoy\Nestedset\NodeTrait;
+use PhpCollective\Tracker\Trackable;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes, NodeTrait;
+    use HasFactory, SoftDeletes, NodeTrait, Trackable;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = ['name', 'parent_id'];
+
+    /**
+     * The attributes that should be cast.
+     *
      * @var array
      */
-    protected $guarded = ['id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-
     protected $casts = [
         'parent_id' => 'integer',
     ];
 
+    /**
+     * The method to change the default route key.
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
     /**
-     * @param $value
-     */
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = $value;
-        $this->attributes['slug'] = Str::slug($value, '-');
-    }
-
-    /**
+     * Query scope for parent categories.
+     *
      * @param $query
      * @return mixed
      */
@@ -45,8 +50,75 @@ class Category extends Model
         return $query->where('parent_id', null);
     }
 
+    /**
+     * Get the parent category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id')->withDefault();
+        return $this->belongsTo(Category::class, 'parent_id', 'id')->withDefault();
+    }
+
+    /**
+     * Get related products.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    /**
+     * Get related user who created the category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * Get related user who updated the category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * Get related user who deleted the category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function deletedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * The boot method for the model.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(fn($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
+        
+        static::softDeleted(function($category) {
+            $time = time();
+            $category->name = $time . '-' . $category->name;
+            $category->slug = $time . '-' . $category->slug;
+            $category->deleted_by = auth()->user()->id;
+        });
+
+        static::deleting(fn($category) => $category->deleted_by = null);
     }
 }

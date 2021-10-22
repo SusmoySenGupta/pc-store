@@ -17,18 +17,20 @@ class CreateOrdersTable extends Migration
         {
             $table->id();
             
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
             ->nullable()
             ->constrained()
             ->nullOnDelete();
 
-            $table->string('customer_name');
+            $table->string('user_name');
             $table->decimal('total_amount', 11, 2);
             $table->string('billing_address');
             $table->string('shipping_address');
             $table->boolean('is_delivered')->default(false);
+            $table->boolean('delivered_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->track(true);
         });
     }
 

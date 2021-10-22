@@ -18,8 +18,8 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->track(true);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
