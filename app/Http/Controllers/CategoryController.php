@@ -52,7 +52,7 @@ class CategoryController extends Controller
 
             toast('Category created successfully', 'success');
 
-            return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
+            return redirect()->route('admin.categories.index');
         }
         catch (\Exception$e)
         {
