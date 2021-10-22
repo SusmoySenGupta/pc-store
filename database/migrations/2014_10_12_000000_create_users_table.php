@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', ['super-admin', 'admin', 'customer'])
                 ->default('customer');
                 
-            $table->string('profile_photo', 255)->default('default.png');
+            $table->string('profile_photo', 255)->default('public/images/profile/default.jpg');
             $table->string('phone', 255)->unique()->nullable();
             $table->string('address', 255)->nullable();
             $table->string('zip', 255)->nullable();
