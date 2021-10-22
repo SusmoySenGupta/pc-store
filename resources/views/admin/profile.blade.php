@@ -5,11 +5,6 @@
     <form action="{{ route('admin.user.update', auth()->user()->id) }}" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Do you really want to update your profile?')" class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         @csrf
         @method('PUT')
-        @if (session()->has('error'))
-            <div class="p-2 bg-red-100 rounded dark:bg-red-300 dark:text-gray-700">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="flex flex-col items-center sm:items-start justify-center gap-4 mb-2">
             <div class="relative w-24 h-24 mr-3 rounded-full">
                 <img src="{{ Storage::url($user->profile_photo) }}" alt="Profile" loading="lazy" class="object-cover w-full h-full rounded-full">
