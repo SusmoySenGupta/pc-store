@@ -44,13 +44,15 @@
                     <div class="flex items-center text-sm">
                         <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                             @if ($category->createdBy->id)
-                                <img src="{{ asset('img/profile/' . $category->createdBy->profile_photo) }}" alt="Created by" loading="lazy" class="object-cover w-full h-full rounded-full">
+                                <img src="{{ Storage::url($category->createdBy->profile_photo) }}" alt="Created by" loading="lazy" class="object-cover w-full h-full rounded-full">
                             @else
                             @endif
                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                         </div>
                         <div>
-                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-200">{{ $category->createdBy->name }}</p>
+                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-200">
+                                {{ $category->createdBy->id === auth()->user()->id ? 'You' : $category->createdBy->name }}
+                            </p>
                             <p class="text-xs text-gray-600 dark:text-gray-400">
                                 {{ $category->created_at->format('M d, Y') }}</p>
                             <p class="text-xs text-gray-600 dark:text-gray-400">
@@ -70,13 +72,15 @@
                     <div class="flex items-center text-sm">
                         <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                             @if ($category->updatedBy->id)
-                                <img src="{{ asset('img/profile/' . $category->updatedBy->profile_photo) }}" alt="Created by" loading="lazy" class="object-cover w-full h-full rounded-full">
+                                <img src="{{ Storage::url($category->updatedBy->profile_photo) }}" alt="Created by" loading="lazy" class="object-cover w-full h-full rounded-full">
                             @else
                             @endif
                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                         </div>
                         <div>
-                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-200">{{ $category->updatedBy->name }}</p>
+                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-200">
+                                {{ $category->updatedBy->id === auth()->user()->id ? 'You' : $category->updatedBy->name }}
+                            </p>
                             <p class="text-xs text-gray-600 dark:text-gray-400">
                                 {{ $category->updated_at->format('M d, Y') }}
                             </p>
