@@ -56,7 +56,7 @@ class ProductController extends Controller
 
                 $product->tags()->attach($request->tags);
 
-                if ($request->product_image)
+                if ($request->product_images)
                 {
                     foreach ($request->product_images as $image)
                     {
@@ -228,8 +228,25 @@ class ProductController extends Controller
 
         $this->authorize('forceDelete', $product);
 
+        $product->load('images');
+
         try {
-            $product->forceDelete();
+            DB::transaction(function () use ($product)
+            {
+                if ($product->images())
+                {
+                    foreach ($product->images as $image)
+                    {
+                        if (Storage::exists($image->path))
+                        {
+                            Storage::delete($image->path);
+                        }
+                    }
+                    $product->images()->delete();
+                }
+
+                $product->forceDelete();
+            });
 
             toast('Product deleted permanently', 'error');
 
