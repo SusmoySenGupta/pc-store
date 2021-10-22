@@ -50,7 +50,7 @@ $side_navs = [
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                     @php $active = 'text-gray-800 dark:text-gray-100'; @endphp
                 @endif
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ $active }}" href="{{ $value['route'] ? route($value['route']) : '#' }}">
+                <a href="{{ $value['route'] ? route($value['route']) : '#' }}" class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 {{ $active }}">
                     {!! $value['icon'] !!}
                     <span class="ml-4">{{ $key }}</span>
                 </a>
@@ -58,5 +58,28 @@ $side_navs = [
         @empty
 
         @endforelse
+        @can('viewany', 'App\\Models\User')
+            <li class="relative px-6 py-3">
+                <a href="{{ url('/telescope') }}" class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    <span class="ml-4">Logs</span>
+                </a>
+            </li>
+
+        @endcan
     </ul>
+    @can('viewany', 'App\\Models\User')
+        <div class="px-6 my-6">
+            <a href="{{ route('admin.user.create') }}" class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Add an admin
+                <span class="ml-2" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                </span>
+            </a>
+        </div>
+    @endcan
 </div>

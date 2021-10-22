@@ -72,7 +72,7 @@ class Category extends Model
 
     /**
      * Get related user who created the category.
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy(): BelongsTo
@@ -83,12 +83,23 @@ class Category extends Model
 
     /**
      * Get related user who updated the category.
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by', 'id')
+            ->withDefault();
+    }
+
+    /**
+     * Get related user who deleted the category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function deletedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by', 'id')
             ->withDefault();
     }
 
@@ -99,6 +110,10 @@ class Category extends Model
     {
         parent::boot();
 
-        static::saving(fn ($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
+        static::saving(fn($category) => $category->slug = Str::slug($category->name . '-' . $category->parent?->name ?? '', '-'));
+        
+        static::softDeleted(fn($category) => $category->deleted_by = auth()->user()->id);
+
+        static::deleting(fn($category) => $category->deleted_by = null);
     }
 }

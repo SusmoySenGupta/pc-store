@@ -3,8 +3,9 @@
 
 @section('content')
     <div class="mb-10">
-        <div class="flex items-center">
+        <div class="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             @include('components.forms.buttons.create-button', ['route' => 'admin.products.create', 'label' => 'Create new product'])
+            @include('admin.partials.trashed-link', ['route' => 'admin.products.trashed', 'model' => 'App\Models\Product'])
         </div>
         <div class="w-full mt-4 overflow-hidden border rounded-lg shadow-xs dark:border-none">
             <div class="w-full overflow-x-auto">

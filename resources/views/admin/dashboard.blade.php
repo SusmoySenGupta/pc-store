@@ -141,7 +141,7 @@
         </div>
         @if ($total_users > 5)
             <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                <a href="#" class="flex items-center col-span-3">
+                <a href="{{ route('admin.user.index') }}" class="flex items-center col-span-3">
                     See all users
                 </a>
             </div>

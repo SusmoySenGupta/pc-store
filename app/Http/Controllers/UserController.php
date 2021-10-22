@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest as Request;
 use App\Models\User;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\UserRequest as Request;
 
 class UserController extends Controller
 {
+    private const PASSWORD = 'password';
+
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +27,43 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create(): View
+    {
+        $this->authorize('create', User::class);
+
+        return view('admin.create-admin');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Requests\CategoryRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $this->authorize('create', User::class);
+
+        try {
+            $password = Hash::make(self::PASSWORD);
+
+            User::create($request->all() + ['password' => $password, 'role' => User::ROLE_ADMIN]);
+            
+            toast('Admin added successfully', 'success');
+
+            return redirect()->route('admin.user.index');
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        };
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user
@@ -31,6 +71,8 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
+        $this->authorize('view', $user);
+
         return view('admin.profile', compact('user'));
     }
 
@@ -43,6 +85,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
+        $this->authorize('update', $user);
+
         try {
             if ($request->hasFile('profile_photo'))
             {

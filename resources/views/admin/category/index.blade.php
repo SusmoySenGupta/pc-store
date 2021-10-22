@@ -3,12 +3,9 @@
 
 @section('content')
     <div class="mb-10">
-        <div class="flex items-center">
-            <a href="{{ route('admin.categories.create') }}"
-                class="flex items-center justify-between p-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Create new category
-                <span class="ml-2" aria-hidden="true">+</span>
-            </a>
+        <div class="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            @include('components.forms.buttons.create-button', ['label' => 'Create new category', 'route' => 'admin.categories.create'])
+            @include('admin.partials.trashed-link', ['route' => 'admin.categories.trashed', 'model' => 'App\Models\Category'])
         </div>
         <div class="w-full mt-4 overflow-hidden border rounded-lg shadow-xs dark:border-none">
             <div class="w-full overflow-x-auto">

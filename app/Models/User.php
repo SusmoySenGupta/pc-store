@@ -14,6 +14,10 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const ROLE_SUPER_ADMIN     = 'super-admin';
+    public const ROLE_ADMIN           = 'admin';
+    public const ROLE_CUSTOMER        = 'customer';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -57,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         QueuedPasswordResetJob::dispatch($this, $token);
     }
 
-        /**
+    /**
      * The method for getting only admin users.
      *
      * @param $query
@@ -65,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public static function scopeExceptSuperAdmin($query)
     {
-        return $query->where('role', '!=', 'super-admin');
+        return $query->where('role', '!=', self::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -76,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public static function scopeAdmins($query)
     {
-        return $query->where('role', 'admin');
+        return $query->where('role', self::ROLE_ADMIN);
     }
 
     /**
@@ -87,6 +92,36 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public static function scopeCustomers($query)
     {
-        return $query->where('role', 'customer');
+        return $query->where('role', self::ROLE_CUSTOMER);
+    }
+
+    /**
+     * Determines whether the user is a super administrator.
+     * 
+     * @return bool
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === self::ROLE_SUPER_ADMIN;
+    }
+
+    /**
+     * Determines whether the user is an administrator.
+     * 
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Determines whether the user is a customer.
+     * 
+     * @return bool
+     */
+    public function isCustomer(): bool
+    {
+        return $this->role === self::ROLE_CUSTOMER;
     }
 }
