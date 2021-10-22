@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TagController;
@@ -83,5 +84,16 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::resource('tags', TagController::class)->except('show');
         Route::resource('orders', OrderController::class)->only('index', 'show', 'update');
         // Route::resource('components', ComponentController::class)->except('show');
+
+        //Notification routes
+        Route::prefix('notifications')->as('notifications.')->group(function (){
+            Route::get('/alerts', [NotificationController::class, 'alert'])
+                ->name('alerts');
+            Route::delete('/alerts/clear', [NotificationController::class, 'clearAlert'])
+                ->name('alerts.clear');
+    
+            Route::get('/sales', [NotificationController::class, 'sale'])
+                ->name('sales');
+        });
     });
 });
