@@ -91,9 +91,6 @@ Route::middleware(['auth', 'verified'])->group(function ()
                 ->name('alerts');
             Route::delete('/alerts/clear', [NotificationController::class, 'clearAlert'])
                 ->name('alerts.clear');
-    
-            Route::get('/sales', [NotificationController::class, 'sale'])
-                ->name('sales');
         });
     });
 });

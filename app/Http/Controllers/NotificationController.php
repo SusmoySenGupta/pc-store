@@ -45,24 +45,4 @@ class NotificationController extends Controller
             );
         }
     }
-
-    /**
-     * Shows all the alert notifications.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sale()
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function clearSale()
-    {
-        //
-    }
 }
