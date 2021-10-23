@@ -26,12 +26,12 @@
                 @forelse ($products as $product)
                     <div class="flex flex-col justify-between w-full p-4 rounded lg:w-1/4 md:w-1/2 hover:shadow-lg">
                         <div>
-                            <a class="relative block h-48 overflow-hidden rounded">
+                            <a href="{{ route('product.show', $product) }}" class="relative block h-48 overflow-hidden rounded">
                                 <img alt="product" class="block object-cover object-center w-full h-full" src="{{ Storage::url($product->images->first()->path) }}">
                             </a>
                             <div class="mt-4">
                                 <h3 class="mb-1 text-xs tracking-widest text-gray-500 title-font">{{ $product->category->name }}</h3>
-                                <a href="#" class="text-lg font-medium text-gray-900 title-font">{{ $product->name }}</a>
+                                <a href="{{ route('product.show', $product) }}" class="text-lg font-medium text-gray-900 title-font">{{ $product->name }}</a>
                                 <div class="mt-1">
                                     <span class="text-2xl">৳</span>
                                     <span class="@if ($product->discount_percentage > 0) line-through @endif">{{ number_format($product->price, 2, '.', ',') }}</span>
