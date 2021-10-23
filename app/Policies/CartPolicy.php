@@ -65,30 +65,6 @@ class CartPolicy
      */
     public function delete(User $user, Cart $cart)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Cart $cart)
-    {
-        //
+        return $user->cart->id === $cart->id;
     }
 }

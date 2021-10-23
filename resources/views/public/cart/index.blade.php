@@ -10,7 +10,7 @@
                     </svg>
                     <h1 class="text-2xl font-medium text-gray-900 sm:text-3xl title-font"> Cart </h1>
                 </div>
-                @if ($cart->products->count())
+                @if ($cart?->products->count())
                     <form action="{{ route('cart.update', $cart) }}" class="w-full" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('PUT')
@@ -47,7 +47,7 @@
                                 @endforelse
                             </tbody>
                             <tfoot>
-                                @if ($cart->products->count())
+                                @if ($cart?->products->count())
                                     <tr>
                                         <th class="py-4 text-left">
                                             <button type="submit" class="inline-flex items-center justify-center gap-2 px-2 py-1 border rounded">
@@ -65,9 +65,23 @@
                             </tfoot>
                         </table>
                     </form>
-                    <button class="flex px-8 py-2 mx-auto mt-16 text-lg text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">
-                        Confirm order
-                    </button>
+                    <div class="flex justify-center mt-16 item-center gap-4">
+                        <button class="flex px-8 py-2  text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">
+                            Confirm order
+                        </button>
+                        <form action="{{ route('cart.destroy', $cart) }}" onsubmit="return confirm('Are you sure you want to clear your cart?')" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center justify-center gap-2 px-8 py-2 border rounded">
+                                <span>Clear cart</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                  </svg>
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <p class="mt-6 animate-pulse">No product available</p>
                 @endif
             </div>
         </div>

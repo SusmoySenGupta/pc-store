@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Public;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 
 class CartController extends Controller
 {
@@ -28,9 +28,9 @@ class CartController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->authorize('create', Cart::class);
 
@@ -71,9 +71,9 @@ class CartController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, Cart $cart): RedirectResponse
     {
         $this->authorize('update', $cart);
 
@@ -112,8 +112,20 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Cart $cart): RedirectResponse
     {
-        //
+        $this->authorize('delete', $cart);
+
+        try {
+            $cart->delete();
+
+            alert()->success('Cart updated', 'Success');
+
+            return redirect()->back();
+        }
+        catch (\Exception$e)
+        {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }
