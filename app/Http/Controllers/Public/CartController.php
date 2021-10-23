@@ -22,7 +22,7 @@ class CartController extends Controller
     {
         $cart = Cart::userProduct()->first();
 
-        return view('public.cart.index', compact('cart'));
+        return view('public.cart', compact('cart'));
     }
 
     /**
