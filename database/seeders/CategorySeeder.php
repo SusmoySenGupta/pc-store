@@ -94,78 +94,60 @@ class CategorySeeder extends Seeder
             'updated_at' => now(),
         ]);//13
         Category::create([
-            'name' => 'TV',
-            'parent_id' => '',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);//14
-        Category::create([
-            'name' => 'AC',
-            'parent_id' => '',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);//15
-        Category::create([
-            'name' => 'Gadget',
-            'parent_id' => '',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);//16
-        Category::create([
             'name' => 'Gaming',
             'parent_id' => '',
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//17
+        ]);//14
 
         Category::create([
             'name' => 'Special Pc',
             'parent_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//18
+        ]);//15
         Category::create([
             'name' => 'Start Pc',
             'parent_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//19
+        ]);//16
         Category::create([
             'name' => 'Ryzen Pc',
             'parent_id' => 19,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//20
+        ]);//17
         Category::create([
             'name' => 'Intel Pc',
             'parent_id' => 19,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//21
+        ]);//18
 
         Category::create([
             'name' => 'Gaming laptop',
             'parent_id' => 2,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//22
+        ]);//19
         Category::create([
             'name' => 'Razer',
             'parent_id' => 22,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//23
+        ]);//20
         Category::create([
             'name' => 'HP',
             'parent_id' => 22,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//24
+        ]);//21
         Category::create([
             'name' => 'ASUS',
             'parent_id' => 22,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);//25
+        ]);//22
     }
 }
