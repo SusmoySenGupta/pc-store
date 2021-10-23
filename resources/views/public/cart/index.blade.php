@@ -10,6 +10,14 @@
                     </svg>
                     <h1 class="text-2xl font-medium text-gray-900 sm:text-3xl title-font"> Cart </h1>
                 </div>
+                @if ($errors->any())
+                    @foreach ($errors->get('quantity.*') as $quantity_errors)
+                        @foreach ($quantity_errors as $quantity_error)
+                            <p class="text-left text-base text-red-500">{{ $quantity_error }}</p>
+                        @endforeach
+                    @endforeach
+                @endif
+
                 @if ($cart?->products->count())
                     <form action="{{ route('cart.update', $cart) }}" class="w-full" enctype="multipart/form-data" method="POST">
                         @csrf
@@ -24,23 +32,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($cart->products ?? [] as $item)
+                                @forelse ($cart->products ?? [] as $product)
                                     <tr class="border-b">
                                         <td class="py-2">
                                             <div class="flex flex-wrap items-center justify-start gap-4 ">
-                                                <img class="hidden w-20 h-20 md:block" src="{{ Storage::url($item->images->first()->path) }}" alt="product">
-                                                <span>{{ $item->name }}</span>
+                                                <img class="hidden w-20 h-20 md:block" src="{{ $product->images->count() ? Storage::url($product?->images?->first()?->path) : 'https://dummyimage.com/500x300' }}" alt="product">
+                                                <a href="{{ route('product.show', $product) }}">{{ $product->name }}</a>
                                             </div>
                                         </td>
                                         <td class="py-2 text-left">
-                                            <input type="hidden" class="hidden" name="product_id[]" value="{{ $item->id }}">
-                                            <input name="quantity[]" type="number" class="w-20 rounded" value="{{ $item->pivot->quantity }}">
+                                            <input type="hidden" class="hidden" name="product_id[]" value="{{ $product->id }}">
+                                            <input name="quantity[]" type="number" class="w-20 rounded" max="25" value="{{ $product->pivot->quantity }}">
                                         </td>
                                         <td class="py-2 text-right">
-                                            <span>{{ number_format(round($item->price), 0, '.', ',') }} BDT</span>
+                                            <span>{{ number_format(round($product->offer_price), 0, '.', ',') }} BDT</span>
                                         </td>
                                         <td class="py-2 text-right">
-                                            {{ number_format(round($item->price * $item->pivot->quantity), 0, '.', ',') }} BDT
+                                            {{ number_format(round($product->offer_price * $product->pivot->quantity), 0, '.', ',') }} BDT
                                         </td>
                                     </tr>
                                 @empty
@@ -49,6 +57,7 @@
                             <tfoot>
                                 @if ($cart?->products->count())
                                     <tr>
+                                        <th class="py-4 text-left"></th>
                                         <th class="py-4 text-left">
                                             <button type="submit" class="inline-flex items-center justify-center gap-2 px-2 py-1 border rounded">
                                                 <span>Update</span>
@@ -57,9 +66,8 @@
                                                 </svg>
                                             </button>
                                         </th>
-                                        <th class="py-4"></th>
                                         <th class="py-4 text-right">Sub total:</th>
-                                        <th class="py-4 text-right">{{ number_format(round($cart->total_price ?? 0), 0, '.', ',') }} BDT</th>
+                                        <th class="py-4 text-right">{{ number_format(round($cart->total_price), 0, '.', ',') }} BDT</th>
                                     </tr>
                                 @endif
                             </tfoot>
@@ -73,10 +81,10 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="inline-flex items-center justify-center gap-2 px-8 py-2 border rounded">
-                                <span>Clear cart</span>
+                                <span>Clear</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                  </svg>
+                                </svg>
                             </button>
                         </form>
                     </div>

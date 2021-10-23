@@ -29,29 +29,7 @@
             <h1 class="mb-10 text-3xl font-medium text-center text-gray-900 title-font sm:text-4xl">
                 Latest products
             </h1>
-            <div class="flex flex-wrap justify-center -m-4">
-                @foreach ($products as $product)
-                    <div class="w-full p-4 lg:w-1/4 md:w-1/2">
-                        <a href="{{ route('product.show', $product) }}" class="relative block h-48 overflow-hidden rounded">
-                            <img alt="ecommerce" class="block object-cover object-center w-full h-full" src="{{ Storage::url($product->images->first()->path) }}">
-                        </a>
-                        <div class="mt-4">
-                            <h3 class="mb-1 text-xs tracking-widest text-gray-500 title-font">{{ $product->category->name }}</h3>
-                            <a href="{{ route('product.show', $product) }}" class="text-lg font-medium text-gray-900 title-font">{{ $product->name }}</a>
-                            <div class="mt-1">
-                                <span class="text-2xl">৳</span>
-                                <span class="@if ($product->discount_percentage > 0) line-through @endif">{{ number_format($product->price, 2, '.', ',') }}</span>
-                                @php
-                                    $discount = $product->price - ($product->price * $product->discount_percentage) / 100;
-                                @endphp
-                                @if ($product->discount_percentage > 0)
-                                    <span>{{ number_format($discount, 2, '.', ',') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            @include('components.product-card', ['products' => $products])
         </div>
     </section>
 

@@ -46,7 +46,7 @@
                                 </span>
                             </div>
                             <p class="leading-relaxed">
-                                {{  Str::substr($product->description, 0, 300) . (Str::length($product->description) > 300 ? '...' : '') }}
+                                {{ Str::substr($product->description, 0, 300) . (Str::length($product->description) > 300 ? '...' : '') }}
                             </p>
                             <div class="flex flex-wrap items-center justify-start gap-2 my-6">
                                 @foreach ($product->tags as $tag)
@@ -58,29 +58,18 @@
                             <div class="flex mt-6 pt-4 border-t border-gray-400">
                                 <div>
                                     <span class="text-3xl">৳</span>
-                                    <span class="text-xl font-medium @if ($product->discount_percentage > 0) line-through @endif">{{ number_format($product->price, 2, '.', ',') }}</span>
-                                    @php
-                                        $discount = $product->price - ($product->price * $product->discount_percentage) / 100;
-                                    @endphp
-                                    @if ($product->discount_percentage > 0)
-                                        <span class="text-xl font-medium">{{ number_format($discount, 2, '.', ',') }}</span>
+                                    <span class="text-xl font-medium @if ($product->price != $product->offer_price) line-through @endif">{{ number_format($product->price, 2, '.', ',') }}</span>
+                                    @if ($product->price != $product->offer_price)
+                                        <span class="text-xl font-medium">{{ number_format($product->offer_price, 2, '.', ',') }}</span>
                                     @endif
                                 </div>
-                                @auth()
-                                    @can('view', $product)
-                                    <form action="{{ route('cart.store') }}" class="ml-auto" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">
-                                            Buy now
-                                        </button>
-                                    </form>
-                                    @endcan
-                                @endauth
-                                @guest()
-                                <button class="flex ml-auto text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">Buy now</button> 
-      
-                                @endguest
+                                <form action="{{ route('cart.store') }}" class="ml-auto @cannot('view', $product) hidden @endcannot" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">
+                                        Buy now
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
