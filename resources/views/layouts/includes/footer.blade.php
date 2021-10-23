@@ -82,7 +82,7 @@
                     @susmoy
                 </a>
                 <a href="https://github.com/SusmoySenGupta" rel="noopener noreferrer" class="ml-1 text-gray-600" target="_blank">
-                   | v1.0.0
+                   | v1.2.0
                  </a>
             </p>
             <span class="inline-flex justify-center mt-2 sm:ml-auto sm:mt-0 sm:justify-start">

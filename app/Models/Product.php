@@ -126,6 +126,19 @@ class Product extends Model
     {
         parent::boot();
         
+        static::creating(function ($category) {
+            $category->offer_price = $category->discount_percentage == 0.0 
+            ? $category->price 
+            : $category->price - ($category->price * $category->discount_percentage / 100);
+            
+        });
+        static::updating(function ($category) {
+            $category->offer_price = $category->discount_percentage == 0.0 
+            ? $category->price 
+            : $category->price - ($category->price * $category->discount_percentage / 100);
+            
+        });
+
         static::softDeleted(function($product) {
             $time = time();
             $product->name = $time . '-' . $product->name;
