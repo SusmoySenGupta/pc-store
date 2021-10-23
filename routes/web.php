@@ -35,6 +35,7 @@ Route::get('/products/{product:slug}', [PublicProductController::class, 'show'])
 
 Route::middleware(['auth', 'verified'])->group(function ()
 {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('cart', CartController::class);
     Route::resource('order', PublicOrderController::class);
 

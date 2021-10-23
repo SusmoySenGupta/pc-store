@@ -11,7 +11,15 @@
             <div class="flex items-center justify-start gap-2">
                 @auth
                     <div class="flex items-center justify-start gap-2">
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700">Dashboard</a>
+                        @php
+                            $dashboard = '/';
+                            if(auth()->user()->isAdmin() || auth()->user()->isAdmin()) {
+                                $dashboard = 'admin.dashboard';
+                            } else {
+                                $dashboard = 'dashboard';
+                            }
+                        @endphp
+                        <a href="{{ route($dashboard) }}" class="text-sm text-gray-700">Dashboard</a>
 
                         @if (auth()->user()->cart)
                             <a href="{{ route('cart.index') }}" class="flex items-center text-sm">
