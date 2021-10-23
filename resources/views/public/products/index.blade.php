@@ -44,9 +44,14 @@
                                 </div>
                             </div>   
                         </div>
-                        <button class="px-2 py-1 mt-4 border rounded hover:bg-gray-50">
-                            Buy now
-                        </button>
+                        <form action="{{ route('cart.store') }}" class="mt-4" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button class="px-2 py-1 border rounded hover:bg-gray-50">
+                                Buy now
+                            </button>
+                        </form>
+                        
                     </div>
                 @empty
                     <p class="text-xl animate-pulse">Products coming soon!</p>

@@ -56,7 +56,7 @@
                                 @endforeach
                             </div>
                             <div class="flex mt-6 pt-4 border-t border-gray-400">
-                                <div class="">
+                                <div>
                                     <span class="text-3xl">৳</span>
                                     <span class="text-xl font-medium @if ($product->discount_percentage > 0) line-through @endif">{{ number_format($product->price, 2, '.', ',') }}</span>
                                     @php
@@ -68,12 +68,18 @@
                                 </div>
                                 @auth()
                                     @can('view', $product)
-                                        <button class="flex ml-auto text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">Buy now</button </div>
+                                    <form action="{{ route('cart.store') }}" class="ml-auto" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <button type="submit" class="text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">
+                                            Buy now
+                                        </button>
+                                    </form>
                                     @endcan
                                 @endauth
                                 @guest()
-                                <button class="flex ml-auto text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">Buy now</button </div>
-                                    
+                                <button class="flex ml-auto text-gray-800 border py-2 px-6 focus:outline-none hover:bg-gray-100 rounded">Buy now</button> 
+      
                                 @endguest
                             </div>
                         </div>
