@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'phone',
         'address',
-        'zip'
+        'zip',
     ];
 
     /**
@@ -131,5 +131,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function superAdmins()
     {
         return self::where('role', self::ROLE_SUPER_ADMIN)->get();
-    } 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
 }

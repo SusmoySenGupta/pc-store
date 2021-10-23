@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\Public\ProductController as PublicProductController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Public\CartController;
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Public\ProductController as PublicProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::get('/products/{product:slug}', [PublicProductController::class, 'show'])
 
 Route::middleware(['auth', 'verified'])->group(function ()
 {
+    Route::resource('cart', CartController::class);
+
     Route::middleware(['is_super_admin_or_admin'])->prefix('admin')->name('admin.')->group(function ()
     {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');

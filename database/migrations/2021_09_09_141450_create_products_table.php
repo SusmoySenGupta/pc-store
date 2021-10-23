@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 11, 2);
             $table->integer('stock')->default(0);
             $table->decimal('discount_percentage', 11, 2)->nullable();
+            $table->decimal('offer_price', 11, 2)->nullable();
 
             $table->foreign('category_id')
                 ->references('id')
