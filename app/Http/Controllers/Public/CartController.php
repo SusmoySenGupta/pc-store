@@ -46,12 +46,13 @@ class CartController extends Controller
                     $cart = $user->cart()->create(['total_price' => 0]);
                     $cart->products()->attach($request->product_id, ['quantity' => 1]);
                 }
-
-                $product = $cart->products->where('id', $request->product_id)->first();
-
-                $product
-                    ? $product->pivot->increment('quantity')
-                    : $cart->products()->attach($request->product_id, ['quantity' => 1]);
+                else {
+                    $product = $cart->products->where('id', $request->product_id)->first();
+    
+                    $product
+                        ? $product->pivot->increment('quantity')
+                        : $cart->products()->attach($request->product_id, ['quantity' => 1]);
+                }
 
                 $cart->update(['total_price' => $this->countTotal($cart)]);
             });
