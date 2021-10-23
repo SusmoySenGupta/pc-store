@@ -41,7 +41,7 @@ class CartPolicy
      */
     public function create(User $user)
     {
-        //
+        return !$user->isAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class CartPolicy
      */
     public function update(User $user, Cart $cart)
     {
-        //
+        return $user->cart->id === $cart->id;
     }
 
     /**

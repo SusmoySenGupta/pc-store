@@ -13,7 +13,7 @@
     @endif
     @yield('content')
 
-    {{-- @include('sweetalert::alert') --}}
+    @include('sweetalert::alert')
     <!-- Footer -->
     @include('layouts.includes.footer')
 </body>

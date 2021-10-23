@@ -25,16 +25,6 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -42,6 +32,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Cart::class);
+
         try {
             DB::transaction(function () use ($request)
             {
@@ -75,28 +67,6 @@ class CartController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -105,7 +75,35 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        $this->authorize('update', $cart);
+
+        try {
+            DB::transaction(function () use ($request)
+            {
+                $user = User::where('id', auth()->user()->id)->first();
+                $cart = $user->cart()->first();
+
+                $cart->products()->detach();
+
+                foreach ($request->product_id as $key => $product_id)
+                {
+                    if($request->quantity[$key])
+                    {
+                        $cart->products()->attach($product_id, ['quantity' => $request->quantity[$key]]);
+                    }
+                }
+            });
+
+            alert()->success('Cart updated', 'Success');
+
+            return redirect()->back()->with('success', 'Product added to cart');
+        }
+        catch (\Exception$e)
+        {
+            alert()->error($e->getMessage(), 'Error');
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
