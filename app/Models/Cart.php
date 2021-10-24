@@ -40,4 +40,13 @@ class Cart extends Model
     {
         return $query->with('products')->where('user_id', auth()->user()->id);
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeAuthUser($query)
+    {
+        return $query->where('user_id', auth()->user()->id);
+    }
 }

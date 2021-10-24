@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use App\Jobs\QueuedPasswordResetJob;
+use Laravel\Sanctum\HasApiTokens;
 use App\Jobs\QueuedVerifyEmailJob;
+use App\Jobs\QueuedPasswordResetJob;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -134,10 +136,37 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return mixed
+     * Defines the relationship between the user and the cart
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function cart()
+    public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * Defines the relationship between the user and the orders
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Defines the relationship between the user and the payments.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function scopeAuthUser()
+    {
+        return $this->where('id', auth()->id())->first();
     }
 }

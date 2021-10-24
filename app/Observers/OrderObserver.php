@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Models\User;
 use App\Models\Order;
+use App\Notifications\OrderCreated;
+use Illuminate\Support\Facades\Notification;
 
 class OrderObserver
 {
@@ -14,7 +17,10 @@ class OrderObserver
      */
     public function created(Order $order)
     {
-        //
+        Notification::send(
+            auth()->user(), 
+            new OrderCreated($order)
+        );
     }
 
     /**

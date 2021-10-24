@@ -11,6 +11,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Public\CartController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Public\PublicOrderController;
+use App\Http\Controllers\Public\PublicDashboardController;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
 
 /*
@@ -35,6 +37,7 @@ Route::get('/products/{product:slug}', [PublicProductController::class, 'show'])
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::resource('cart', CartController::class);
+    Route::resource('orders', PublicOrderController::class);
 
     Route::middleware(['is_super_admin_or_admin'])->prefix('admin')->name('admin.')->group(function ()
     {
