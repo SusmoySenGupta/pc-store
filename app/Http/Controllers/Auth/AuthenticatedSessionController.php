@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         }
         else if(auth()->user()->role === User::ROLE_CUSTOMER)
         {
-            $path = RouteServiceProvider::CUSTOMER_HOME;
+            $path = RouteServiceProvider::HOME;
         }
 
         return redirect()->intended($path);

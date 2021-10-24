@@ -11,10 +11,14 @@
             <div class="flex items-center justify-start gap-2">
                 @auth
                     <div class="flex items-center justify-start gap-2">
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700">Dashboard</a>
+                        @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-700 @if(request()->routeIs('admin.dashboard')) font-bold @endif">Dashboard</a>
+                        @else
+                            <a href="{{ route('orders.index') }}" class="text-sm text-gray-700 @if(request()->routeIs('orders.index')) font-bold @endif">Orders</a>
+                        @endif
 
                         @if (auth()->user()->cart)
-                            <a href="{{ route('cart.index') }}" class="flex items-center text-sm">
+                            <a href="{{ route('cart.index') }}" class="flex items-center text-sm @if(request()->routeIs('cart.index')) font-bold  @endif">
                                 <span>|</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 mr-1 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />

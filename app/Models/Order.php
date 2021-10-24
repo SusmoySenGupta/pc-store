@@ -19,9 +19,9 @@ class Order extends Model
     /**
      * @return mixed
      */
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customer::class)->withDefault();
+        return $this->belongsTo(User::class)->withDefault();
     }
 
     /**

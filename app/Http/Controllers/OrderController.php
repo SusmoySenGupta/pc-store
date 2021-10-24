@@ -6,7 +6,6 @@ use App\Models\Order;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
@@ -75,14 +74,12 @@ class OrderController extends Controller
     public function update(Request $request, Order $order): RedirectResponse
     {
         try {
-            $order->update(['is_delivered' => !$order->is_delivered]);
+            $delivered_at = '';
+            !$order->is_delivered ? $delivered_at = now() : $delivered_at = null;
 
-            Alert::toast("Order status has been updated", 'success')
-                ->padding('0.3rem')
-                ->width('20rem')
-                ->position('bottom-left')
-                ->background('#F9FAFB')
-                ->timerProgressBar();
+            $order->update(['is_delivered' => !$order->is_delivered, 'delivered_at' => $delivered_at]);
+
+            alert()->success("Order status has been updated");
 
             return redirect()->route('admin.orders.index');
         }

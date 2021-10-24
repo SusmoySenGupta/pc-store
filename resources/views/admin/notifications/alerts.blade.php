@@ -29,7 +29,7 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <a href="{{ $alert->data['link'] }}" class="font-semibold underline">
-                                        {{ $alert->data['data']['name'] }}
+                                        {{ $alert->data['name']['name'] }}
                                     </a>
                                 </td>
                                 <td class="px-4 py-3 text-xs">

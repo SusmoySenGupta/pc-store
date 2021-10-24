@@ -33,7 +33,7 @@
                     Total incomes
                 </p>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    {{ $total_incomes }}
+                    {{ number_format($total_incomes, 0, '.', ',') }} BDT
                 </p>
             </div>
         </div>

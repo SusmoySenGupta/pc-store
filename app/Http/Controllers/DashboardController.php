@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
         $total_products = Product::count();
 
-        $total_incomes = Payment::all()->sum('amount');
+        $total_incomes = Payment::all()->sum('payment_amount');
 
         return view('admin.dashboard', compact(
             'users',
