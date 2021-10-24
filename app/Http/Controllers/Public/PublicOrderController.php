@@ -50,11 +50,11 @@ class PublicOrderController extends Controller
         $user = User::authUser();
         $cart = $user->cart()->first();
 
-        if($request->total_amount != $cart->total_price)
+        if($request->amount != $cart->total_price)
         {
-            alert()->error('Total amount is not equal to cart total price');
+            alert()->error('Amount is not equal to cart total price');
 
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
 
         $request->amount             = $cart->total_price;

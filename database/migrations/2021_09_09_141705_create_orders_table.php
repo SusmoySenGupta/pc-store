@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('billing_address');
             $table->string('shipping_address');
             $table->boolean('is_delivered')->default(false);
-            $table->boolean('delivered_at')->nullable();
+            $table->timestamp('delivered_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->track(true);

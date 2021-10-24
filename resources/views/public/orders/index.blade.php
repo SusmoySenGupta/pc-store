@@ -26,7 +26,7 @@
                                 <span>{{ $order->orderDetails->count() }}</span>
                             </td>
                             <td class="py-2 text-center">
-                                <span>{{ $order->created_at->format('d/M/Y') }}</span>
+                                <span>{{ $order->created_at->format('d-M-Y') }}</span>
                             </td>
                             <td class="py-2 text-center">
                                 @if ($order->is_delivered)
@@ -40,7 +40,7 @@
                                 @endif
                             </td>
                             <td class="py-2 text-center">
-                                <span>{{ $order->delivered_at ? $order->delivered_at>format('D/M/Y') : '---' }}</span>
+                                <span>{{ $order->delivered_at ? date_create($order->delivered_at)->format('d-M-Y') : '---' }}</span>
                             </td>
                             <td class="py-2 text-right">
                                 {{ number_format($order->total_amount, 0, '.', ',') }} BDT
