@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Order;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Public\OrderRequest;
@@ -110,6 +111,18 @@ class PublicOrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function pdf()
+    {
+        $order = Order::find(12);
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf = $pdf->loadView('public.orders.pdf', compact('order'));
+
+        // return $pdf->download('orders.pdf');
+        return $pdf->stream();
+        // return view('public.orders.pdf');
     }
 
     /**

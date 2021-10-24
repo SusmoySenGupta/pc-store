@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Public\CartController;
 use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Public\PublicOrderController;
-use App\Http\Controllers\Public\PublicDashboardController;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
+use App\Http\Controllers\Public\PublicOrderController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +36,15 @@ Route::get('/products/{product:slug}', [PublicProductController::class, 'show'])
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::resource('cart', CartController::class);
-    Route::resource('orders', PublicOrderController::class);
+
+    Route::prefix('orders')->as('orders.')->group(function ()
+    {
+        Route::get('/pdf/{order}', [PublicOrderController::class, 'pdf'])
+            ->name('pdf');
+
+        Route::resource('/', PublicOrderController::class)
+            ->parameter('', 'order');
+    });
 
     Route::middleware(['is_super_admin_or_admin'])->prefix('admin')->name('admin.')->group(function ()
     {
