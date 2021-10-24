@@ -7,7 +7,9 @@
                     <tr>
                         <th class="py-2 text-left">Order no</th>
                         <th class="text-center">No of products</th>
+                        <th class="text-center">Ordered at</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Delivered at</th>
                         <th class="text-right">Total</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -24,6 +26,9 @@
                                 <span>{{ $order->orderDetails->count() }}</span>
                             </td>
                             <td class="py-2 text-center">
+                                <span>{{ $order->created_at->format('d/M/Y') }}</span>
+                            </td>
+                            <td class="py-2 text-center">
                                 @if ($order->is_delivered)
                                     <span class="px-2 py-1 text-sm font-semibold leading-tight text-green-700 bg-green-100 rounded-full whitespace-nowrap">
                                         Delivered
@@ -33,6 +38,9 @@
                                         Pending
                                     </span>
                                 @endif
+                            </td>
+                            <td class="py-2 text-center">
+                                <span>{{ $order->delivered_at ? $order->delivered_at>format('D/M/Y') : '---' }}</span>
                             </td>
                             <td class="py-2 text-right">
                                 {{ number_format($order->total_amount, 0, '.', ',') }} BDT
