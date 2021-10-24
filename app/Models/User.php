@@ -164,4 +164,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function scopeAuthUser()
+    {
+        return $this->where('id', auth()->id())->first();
+    }
 }

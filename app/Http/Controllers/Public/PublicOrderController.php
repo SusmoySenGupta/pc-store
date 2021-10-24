@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\OrderRequest;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -18,9 +19,9 @@ class PublicOrderController extends Controller
      */
     public function index()
     {
-        $orders = auth()->user()->orders()->paginate(10);
+        $orders = User::authUser()->orders()->latest()->paginate(10);
 
-        return view('public.order.index', compact('orders'));
+        return view('public.orders.index', compact('orders'));
     }
 
     /**
@@ -30,11 +31,11 @@ class PublicOrderController extends Controller
      */
     public function create(): View
     {
-        $cart = Cart::authUser()->first();
+        $cart = User::authUser()->cart()->first();
 
         abort_if(!$cart, 404, 'Cart not found');
 
-        return view('public.order.create', compact('cart'));
+        return view('public.orders.create', compact('cart'));
     }
 
     /**
@@ -45,8 +46,8 @@ class PublicOrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $cart = Cart::authUser()->first();
-        $user = auth()->user();
+        $user = User::authUser();
+        $cart = $user->cart()->first();
 
         $request->amount             = $cart->total_price;
         $request['user_name']        = $user->name;
@@ -67,11 +68,11 @@ class PublicOrderController extends Controller
                 $user->payments()->create($request->all());
 
                 $cart->delete();
-
-                alert()->success('ok', 'success');
-    
-                return redirect()->route('orders.show', $order->id);
             });
+
+            alert()->success('Order confirmed.');
+    
+            return redirect()->route('orders.index');
         }
         catch (\Exception$e)
         {
@@ -87,9 +88,9 @@ class PublicOrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Order $order): View
     {
-        //
+        return view('public.orders.show', compact('order'));
     }
 
     /**
@@ -116,7 +117,7 @@ class PublicOrderController extends Controller
             $orderDetails[] = [
                 'product_id' => $product->id,
                 'quantity'   => $product->pivot->quantity,
-                'price'      => $product->offer_price,
+                'price'      => $product->pivot->quantity * $product->offer_price,
             ];
         }
 
