@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Public;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Public\OrderRequest;
 use App\Models\Cart;
-use App\Models\Order;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Public\OrderRequest;
 
 class PublicOrderController extends Controller
 {
@@ -42,12 +43,19 @@ class PublicOrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(OrderRequest $request)
+    public function store(OrderRequest $request): RedirectResponse 
     {
         $user = User::authUser();
         $cart = $user->cart()->first();
+
+        if($request->total_amount != $cart->total_price)
+        {
+            alert()->error('Total amount is not equal to cart total price');
+
+            return redirect()->back();
+        }
 
         $request->amount             = $cart->total_price;
         $request['user_name']        = $user->name;
