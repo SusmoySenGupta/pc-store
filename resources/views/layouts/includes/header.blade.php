@@ -11,15 +11,11 @@
             <div class="flex items-center justify-start gap-2">
                 @auth
                     <div class="flex items-center justify-start gap-2">
-                        @php
-                            $dashboard = '/';
-                            if(auth()->user()->isAdmin() || auth()->user()->isAdmin()) {
-                                $dashboard = 'admin.dashboard';
-                            } else {
-                                $dashboard = 'dashboard';
-                            }
-                        @endphp
-                        <a href="{{ route($dashboard) }}" class="text-sm text-gray-700">Dashboard</a>
+                        @if(auth()->user()->isAdmin() || auth()->user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-700">Dashboard</a>
+                        @else
+                            <a href="{{ route('orders.index') }}" class="text-sm text-gray-700">Orders</a>
+                        @endif
 
                         @if (auth()->user()->cart)
                             <a href="{{ route('cart.index') }}" class="flex items-center text-sm">

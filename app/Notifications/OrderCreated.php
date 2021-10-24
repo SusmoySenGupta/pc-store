@@ -43,7 +43,7 @@ class OrderCreated extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->line('Your order has been confirmed')
-                    ->action('See details', route('order.show', $this->order->id))
+                    ->action('See details', route('orders.show', $this->order->id))
                     ->line('Thank you for using our application!');
     }
 

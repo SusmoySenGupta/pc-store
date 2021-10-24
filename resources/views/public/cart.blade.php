@@ -74,7 +74,7 @@
                         </table>
                     </form>
                     <div class="flex justify-center mt-16 item-center gap-4">
-                        <a href="{{ route('order.create') }}" class="flex px-8 py-2  text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">
+                        <a href="{{ route('orders.create') }}" class="flex px-8 py-2  text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">
                             Confirm order
                         </a>
                         <form action="{{ route('cart.destroy', $cart) }}" onsubmit="return confirm('Are you sure you want to clear your cart?')" method="POST">

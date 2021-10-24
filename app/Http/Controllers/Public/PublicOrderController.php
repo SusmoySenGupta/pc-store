@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\OrderRequest;
 use App\Models\Cart;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -19,7 +18,9 @@ class PublicOrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = auth()->user()->orders()->paginate(10);
+
+        return view('public.order.index', compact('orders'));
     }
 
     /**
@@ -33,7 +34,7 @@ class PublicOrderController extends Controller
 
         abort_if(!$cart, 404, 'Cart not found');
 
-        return view('public.order', compact('cart'));
+        return view('public.order.create', compact('cart'));
     }
 
     /**
@@ -69,7 +70,7 @@ class PublicOrderController extends Controller
 
                 alert()->success('ok', 'success');
     
-                return redirect()->route('order.show', $order->id);
+                return redirect()->route('orders.show', $order->id);
             });
         }
         catch (\Exception$e)

@@ -2,7 +2,7 @@
 @section('content')
     <section class="relative text-gray-600 body-font">
         <div class="container flex flex-wrap px-5 py-24 mx-auto sm:flex-nowrap">
-            <form action="{{ route('order.store') }}" method="POST" onsubmit="return confirm('Are you sure?')" class="flex flex-col w-full mx-auto mt-8 bg-white lg:w-1/3 md:w-1/2 md:py-8 md:mt-0">
+            <form action="{{ route('orders.store') }}" method="POST" onsubmit="return confirm('Are you sure?')" class="flex flex-col w-full mx-auto mt-8 bg-white lg:w-1/3 md:w-1/2 md:py-8 md:mt-0">
                 @csrf
                 <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">Payment form</h1>
                 <div class="relative mb-4">
