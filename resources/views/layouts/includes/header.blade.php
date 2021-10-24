@@ -11,7 +11,7 @@
             <div class="flex items-center justify-start gap-2">
                 @auth
                     <div class="flex items-center justify-start gap-2">
-                        @if(auth()->user()->isAdmin() || auth()->user()->isAdmin())
+                        @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                             <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-700">Dashboard</a>
                         @else
                             <a href="{{ route('orders.index') }}" class="text-sm text-gray-700">Orders</a>
