@@ -10,7 +10,7 @@
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3">#</th>
                             <th class="px-4 py-3">#Order</th>
-                            <th class="px-4 py-3">Customer</th>
+                            <th class="px-4 py-3">user</th>
                             <th class="px-4 py-3">Amount</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Updated by</th>
@@ -33,12 +33,12 @@
                                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                         </div>
                                         <div>
-                                            <p class="font-semibold">{{ $order->customer->name }}</p>
+                                            <p class="font-semibold">{{ $order->user->name }}</p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                {{ $order->customer->phone }}
+                                                {{ $order->user->phone }}
                                             </p>
                                             <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                {{ $order->customer->address }}
+                                                {{ $order->user->address }}
                                             </p>
                                         </div>
                                     </div>

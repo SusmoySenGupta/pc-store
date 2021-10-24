@@ -35,19 +35,19 @@
             <div class="flex items-center justify-between">
                 <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer name:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
-                    {{ $order->customer->name }}
+                    {{ $order->user->name }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
                 <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer phone:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
-                    {{ $order->customer->phone }}
+                    {{ $order->user->phone }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
                 <p class="text-xs text-gray-800 dark:text-gray-400 whitespace-nowrap">Customer email:</p>
                 <p class="text-xs font-semibold text-right text-gray-800 break-words dark:text-gray-200">
-                    {{ $order->customer->email }}
+                    {{ $order->user->email }}
                 </p>
             </div>
             <div class="flex items-center justify-between">
